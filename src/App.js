@@ -62,13 +62,24 @@ class App extends React.Component {
     if (!commandArgs.length) {
       this.setState({ pathToCurrentLocation: [] });
     } else {
-      // just pretend we will get a string of a dir name, no ".."s.
       if (commandArgs[0].includes('..')) {
-        // "move them up!!"
+        var command = commandArgs[0].split("/");
+        command.forEach(el => {
+          if (el === ".." || el === "") {
+            this.state.pathToCurrentLocation.pop()
+          } else {
+            this.state.pathToCurrentLocation.push(el);
+          }
+        });
+        //display previous command above command prompt
       } else if (this.directChildren().includes(commandArgs[0])) {
+        //this only works if you provide the exact string ie: turing
+        //can't currently give a path ie: turing/classwork
         this.state.pathToCurrentLocation.push(commandArgs[0]);
+        //display previous command above command prompt
       } else {
-        // `cd: ${commandArgs[0]}: No such file or directory`
+        console.log(`cd: ${commandArgs[0]}: No such file or directory`);
+        //display previous command + output above command prompt
       }
 
     }
