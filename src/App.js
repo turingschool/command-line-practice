@@ -58,27 +58,28 @@ class App extends React.Component {
     return Object.keys(descendants);
   }
 
-  cdCommand = (commandArgs) => {
-    if (!commandArgs.length) {
+  cdCommand = (desiredPath) => {
+    if (!desiredPath.length) {
       this.setState({ pathToCurrentLocation: [] });
     } else {
-      if (commandArgs[0].includes('..')) {
-        var command = commandArgs[0].split("/");
-        command.forEach(el => {
+      const splitDesiredPath = desiredPath[0].split("/");
+
+      if (desiredPath[0].includes('..')) {
+        splitDesiredPath.forEach(el => {
           if (el === ".." || el === "") {
-            this.state.pathToCurrentLocation.pop()
+            this.state.pathToCurrentLocation.pop();
           } else {
             this.state.pathToCurrentLocation.push(el);
           }
         });
         //display previous command above command prompt
-      } else if (this.directChildren().includes(commandArgs[0])) {
-        //this only works if you provide the exact string ie: turing
-        //can't currently give a path ie: turing/classwork
-        this.state.pathToCurrentLocation.push(commandArgs[0]);
+      } else if (this.directChildren().includes(splitDesiredPath[0])) {
+        splitDesiredPath.forEach(el => {
+          this.state.pathToCurrentLocation.push(el);
+        });
         //display previous command above command prompt
       } else {
-        console.log(`cd: ${commandArgs[0]}: No such file or directory`);
+        console.log(`cd: ${desiredPath[0]}: No such file or directory`);
         //display previous command + output above command prompt
       }
 
