@@ -50,12 +50,12 @@ class App extends React.Component {
     }
   };
 
-  directChildren = () => {
+  checkValidRelationship = (nextDesiredDirectory) => {
     const descendants = this.state.pathToCurrentLocation.reduce((acc, level, i) => {
       return acc[level];
     }, this.state.directoryStructure);
 
-    return Object.keys(descendants);
+    return Object.keys(descendants).includes(nextDesiredDirectory);
   }
 
   cdCommand = (desiredPath) => {
@@ -64,18 +64,15 @@ class App extends React.Component {
     } else {
       const splitDesiredPath = desiredPath[0].split("/");
 
-      if (desiredPath[0].includes('..')) {
-        splitDesiredPath.forEach(el => {
+      if (splitDesiredPath.includes('..') || this.checkValidRelationship(splitDesiredPath[0])) {
+        splitDesiredPath.forEach((el, index) => {
           if (el === ".." || el === "") {
             this.state.pathToCurrentLocation.pop();
           } else {
-            this.state.pathToCurrentLocation.push(el);
+            if (this.checkValidRelationship(splitDesiredPath[index])) {
+              this.state.pathToCurrentLocation.push(el);
+            }
           }
-        });
-        //display previous command above command prompt
-      } else if (this.directChildren().includes(splitDesiredPath[0])) {
-        splitDesiredPath.forEach(el => {
-          this.state.pathToCurrentLocation.push(el);
         });
         //display previous command above command prompt
       } else {
