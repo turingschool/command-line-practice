@@ -50,12 +50,15 @@ class App extends React.Component {
     }
   };
 
-  checkValidRelationship = (nextDesiredDirectory) => {
-    const descendants = this.state.pathToCurrentLocation.reduce((acc, level, i) => {
+  findDirectDescendants = () => {
+    return this.state.pathToCurrentLocation.reduce((acc, level) => {
       return acc[level];
     }, this.state.directoryStructure);
-
-    return Object.keys(descendants).includes(nextDesiredDirectory);
+  }
+  checkValidRelationship = (nextDesiredDirectory) => {
+    const directDescendants = this.findDirectDescendants();
+    //should this be includes? or check the last???
+    return Object.keys(directDescendants).includes(nextDesiredDirectory);
   }
 
   cdCommand = (desiredPath) => {
@@ -83,6 +86,14 @@ class App extends React.Component {
     }
   }
 
+  mkdirCommand = (directoriesToMake) => {
+    const directDescendants = this.findDirectDescendants();
+    
+    directoriesToMake.forEach(el => {
+      directDescendants[el] = {};
+    });
+  }
+
   handleNewCommand = (command) => {
     this.setState({ currentCommand: command });
     const commandType = command[0];
@@ -105,6 +116,7 @@ class App extends React.Component {
         //code
         break;
       case 'mkdir':
+        this.mkdirCommand(commandArgs);
         //code
         break;
       case 'rm':
