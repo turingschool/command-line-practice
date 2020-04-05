@@ -8,7 +8,7 @@ class App extends React.Component {
   constructor() {
     super();
     this.state = {
-      directoryStructure: { turing: { classwork: {} }, personal: { } },
+      directoryStructure: { turing: { classwork: {} }, personal: "" },
       pathToCurrentLocation: [],
       currentCommand: [],
       // previousOutput: [],
@@ -55,6 +55,7 @@ class App extends React.Component {
       return acc[level];
     }, this.state.directoryStructure);
   }
+
   checkValidRelationship = (nextDesiredDirectory) => {
     const directDescendants = this.findDirectDescendants();
     //should this be includes? or check the last???
@@ -62,6 +63,7 @@ class App extends React.Component {
   }
 
   cdCommand = (desiredPath) => {
+    //don't let them cd into a file
     if (!desiredPath.length) {
       this.setState({ pathToCurrentLocation: [] });
     } else {
@@ -105,6 +107,14 @@ class App extends React.Component {
     }
   }
 
+  touchCommand = (filesToMake) => {
+    const directDescendants = this.findDirectDescendants();
+
+    filesToMake.forEach(el => {
+      directDescendants[el] = "";
+    });
+  }
+
   handleNewCommand = (command) => {
     this.setState({ currentCommand: command });
     const commandType = command[0];
@@ -124,7 +134,7 @@ class App extends React.Component {
         //code
         break;
       case 'touch':
-        //code
+        this.touchCommand(commandArgs);
         break;
       case 'mkdir':
         this.mkdirCommand(commandArgs);
