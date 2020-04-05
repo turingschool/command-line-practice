@@ -82,6 +82,10 @@ class App extends React.Component {
     });
   }
 
+  pwdCommand = () => {
+    console.log(`root/${this.state.pathToCurrentLocation.join("/")}`);
+  }
+
   handleNewCommand = (command) => {
     this.setState({ currentCommand: command });
     const commandType = command[0];
@@ -98,7 +102,7 @@ class App extends React.Component {
         this.lsCommand(commandArgs[0]);
         break;
       case 'pwd':
-        //code
+        this.pwdCommand();
         break;
       case 'touch':
         this.touchCommand(commandArgs);
