@@ -88,10 +88,21 @@ class App extends React.Component {
 
   mkdirCommand = (directoriesToMake) => {
     const directDescendants = this.findDirectDescendants();
-    
+
     directoriesToMake.forEach(el => {
       directDescendants[el] = {};
     });
+  }
+
+  lsCommand = (commandArg) => {
+    if (!commandArg) {
+      const directDescendants = Object.keys(this.findDirectDescendants())
+      directDescendants.forEach(descendant => {
+        console.log(descendant);
+      });
+    } else {
+      console.log("this command line doesn't have the capability to run `ls` with an argument!");
+    }
   }
 
   handleNewCommand = (command) => {
@@ -107,7 +118,7 @@ class App extends React.Component {
         this.cdCommand(commandArgs);
         break;
       case 'ls':
-        // console.log(directChildren());
+        this.lsCommand(commandArgs[0]);
         break;
       case 'pwd':
         //code
@@ -117,7 +128,6 @@ class App extends React.Component {
         break;
       case 'mkdir':
         this.mkdirCommand(commandArgs);
-        //code
         break;
       case 'rm':
         //code
