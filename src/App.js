@@ -15,66 +15,33 @@ class App extends React.Component {
     }
   }
 
-  helperObject = {
-    cd: function() {
-      if (this.state.currentCommand.length === 1) {
-        this.setState({ currentLoction: {} });
-      } else {
-        const dirToMoveTo = this.state.currentCommand[1];
-        // just pretend we will get a string of a dir name, no ".."s.
-        this.setState({ currentLoction: { dirToMoveTo: {} } });
-      }
-      //change this.state.currentLoction based on arguments -
-        // none - go to root
-        // .. - go up one level
-        // dirname - check if it is a child of this.state.currentLocation, if so, move there.
-        // file name - give "cd: <filename>: Not a directory"
-    },
-    ls: function() {
-      // return all direct descendants of this.state.currentLocation
-    },
-    pwd: function() {
-      // return this.state.currentLocation
-    },
-    touch: function() {
-      // create file in this.state.currentLocation
-        // be ready for >=1 arguments
-    },
-    mkdir: function() {
-      // create dir in this.state.currentLocation
-        // be ready for >=1 arguments
-    },
-    rm: function() {
-      //check if it was rm -rf first, then do necessary work based on rm or rm -rf
-        // be ready for >=1 arguments
-    }
-  };
-
   findDirectDescendants = () => {
     return this.state.pathToCurrentLocation.reduce((acc, level) => {
       return acc[level];
     }, this.state.directoryStructure);
   }
 
-  checkValidRelationship = (nextDesiredDirectory) => {
-    const directDescendants = this.findDirectDescendants();
-    //should this be includes? or check the last???
-    return Object.keys(directDescendants).includes(nextDesiredDirectory);
+  validRelationship = (nextDesiredDir) => {
+    const descendants = this.findDirectDescendants();
+    const checkDirectory = typeof descendants[nextDesiredDir] === "object";
+    const checkExistence = Object.keys(descendants).includes(nextDesiredDir);
+
+    return checkExistence && checkDirectory;
   }
 
   cdCommand = (desiredPath) => {
-    //don't let them cd into a file
+
     if (!desiredPath.length) {
       this.setState({ pathToCurrentLocation: [] });
     } else {
       const splitDesiredPath = desiredPath[0].split("/");
 
-      if (splitDesiredPath.includes('..') || this.checkValidRelationship(splitDesiredPath[0])) {
+      if (splitDesiredPath.includes('..') || this.validRelationship(splitDesiredPath[0])) {
         splitDesiredPath.forEach((el, index) => {
           if (el === ".." || el === "") {
             this.state.pathToCurrentLocation.pop();
           } else {
-            if (this.checkValidRelationship(splitDesiredPath[index])) {
+            if (this.validRelationship(splitDesiredPath[index])) {
               this.state.pathToCurrentLocation.push(el);
             }
           }
