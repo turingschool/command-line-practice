@@ -116,6 +116,9 @@ class App extends React.Component {
       case 'rm':
         //code
         break;
+      default:
+        console.log("you hit the default - this isn't a command!");
+        break;
     }
 
     this.setState({ currentCommand: '' });
