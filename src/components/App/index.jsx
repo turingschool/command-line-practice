@@ -69,11 +69,9 @@ class App extends React.Component {
   lsCommand = (commandArg) => {
     if (!commandArg) {
       const directDescendants = Object.keys(this.findDirectDescendants())
-      directDescendants.forEach(descendant => {
-        console.log(descendant);
-      });
+      return directDescendants.join(' ');
     } else {
-      console.log("this command line doesn't have the capability to run `ls` with an argument!");
+      return 'this command line does not have the capability to run `ls` with an argument!';
     }
   }
 
@@ -86,7 +84,7 @@ class App extends React.Component {
   }
 
   pwdCommand = () => {
-    console.log(`root/${this.state.pathToCurrentLocation.join("/")}`);
+    return `root/${this.state.pathToCurrentLocation.join("/")}`;
   }
 
   handleNewCommand = (command) => {
