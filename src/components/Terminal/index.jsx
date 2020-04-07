@@ -31,7 +31,7 @@ class Terminal extends React.Component {
     return this.state.previousOutput.map(pair => {
       return (
         <div>
-          <p>{pair.command}</p>
+          <p>~ {pair.command}</p>
           <p>{pair.output}</p>
         </div>
       )

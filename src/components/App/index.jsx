@@ -11,7 +11,6 @@ class App extends React.Component {
       directoryStructure: { turing: { classwork: {} }, personal: "" },
       pathToCurrentLocation: [],
       currentCommand: [],
-      // previousOutput: [],
     }
   }
 
@@ -97,19 +96,19 @@ class App extends React.Component {
 
     switch (commandType) {
       case 'cd':
-        this.cdCommand(commandArgs);
+        return this.cdCommand(commandArgs);
         break;
       case 'ls':
-        this.lsCommand(commandArgs[0]);
+        return this.lsCommand(commandArgs[0]);
         break;
       case 'pwd':
-        this.pwdCommand();
+        return this.pwdCommand();
         break;
       case 'touch':
-        this.touchCommand(commandArgs);
+        return this.touchCommand(commandArgs);
         break;
       case 'mkdir':
-        this.mkdirCommand(commandArgs);
+        return this.mkdirCommand(commandArgs);
         break;
       case 'rm':
         //code
@@ -119,7 +118,7 @@ class App extends React.Component {
         break;
     }
 
-    this.setState({currentCommand: ''});
+    this.setState({currentCommand: []});
   }
 
   render() {
