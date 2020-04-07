@@ -1,7 +1,7 @@
 import React from 'react';
-import Nav from './Nav';
-import Terminal from './Terminal';
-import Map from './Map';
+import Nav from '../Nav';
+import Terminal from '../Terminal';
+import Map from '../Map';
 import './App.css';
 
 class App extends React.Component {
@@ -32,9 +32,9 @@ class App extends React.Component {
   cdCommand = (path) => {
 
     if (!path.length) {
-      this.setState({ pathToCurrentLocation: [] });
+      this.setState({pathToCurrentLocation: []});
     } else {
-      const desiredPath = path[0].split("/");
+      const desiredPath = path[0].split('/');
 
       if (desiredPath.includes('..') || this.validRelationship(desiredPath[0])) {
         this.moveToValidDirectory(desiredPath);
@@ -117,19 +117,19 @@ class App extends React.Component {
         //code
         break;
       default:
-        console.log("you hit the default - this isn't a command!");
+        console.log('you hit the default - this is not a command!');
         break;
     }
 
-    this.setState({ currentCommand: '' });
+    this.setState({currentCommand: ''});
   }
 
   render() {
     return (
-      <div className='App'>
+      <div className="App">
         <Nav />
         <main>
-          <Terminal handleNewCommand={ this.handleNewCommand }/>
+          <Terminal handleNewCommand={this.handleNewCommand}/>
           <Map />
         </main>
       </div>
