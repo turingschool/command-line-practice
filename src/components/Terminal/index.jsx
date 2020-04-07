@@ -6,7 +6,8 @@ class Terminal extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      command: ''
+      command: '',
+      previousOutput: []
     }
 
   }
@@ -17,16 +18,24 @@ class Terminal extends React.Component {
 
   submitCommand = (event) => {
     if (event.key === 'Enter') {
-      const splitCommand = this.state.command.split(' ');
-      this.props.handleNewCommand(splitCommand);
+      const command = this.state.command;
+      const splitCommand = command.split(' ');
+      const output = this.props.handleNewCommand(splitCommand);
+
+      this.state.previousOutput.push({command, output});
       this.setState({command: ''});
     }
   }
 
   showPreviousOutput = () => {
+    return this.state.previousOutput.map(pair => {
       return (
-        <p>is this working???</p>
+        <div>
+          <p>~ {pair.command}</p>
+          <p>{pair.output}</p>
+        </div>
       )
+    });
   }
 
   render() {

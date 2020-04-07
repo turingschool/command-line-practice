@@ -11,7 +11,6 @@ class App extends React.Component {
       directoryStructure: { turing: { classwork: {} }, personal: "" },
       pathToCurrentLocation: [],
       currentCommand: [],
-      // previousOutput: [],
     }
   }
 
@@ -38,10 +37,8 @@ class App extends React.Component {
 
       if (desiredPath.includes('..') || this.validRelationship(desiredPath[0])) {
         this.moveToValidDirectory(desiredPath);
-        //display previous command above command prompt
       } else {
         console.log(`cd: ${desiredPath[0]}: No such file or directory`);
-        //display previous command + output above command prompt
       }
     }
   }
@@ -69,11 +66,9 @@ class App extends React.Component {
   lsCommand = (commandArg) => {
     if (!commandArg) {
       const directDescendants = Object.keys(this.findDirectDescendants())
-      directDescendants.forEach(descendant => {
-        console.log(descendant);
-      });
+      return directDescendants.join(' ');
     } else {
-      console.log("this command line doesn't have the capability to run `ls` with an argument!");
+      return 'this command line does not have the capability to run `ls` with an argument!';
     }
   }
 
@@ -86,7 +81,7 @@ class App extends React.Component {
   }
 
   pwdCommand = () => {
-    console.log(`root/${this.state.pathToCurrentLocation.join("/")}`);
+    return `root/${this.state.pathToCurrentLocation.join("/")}`;
   }
 
   handleNewCommand = (command) => {
@@ -94,34 +89,34 @@ class App extends React.Component {
     const commandType = command[0];
     const commandArgs = command.slice(1);
 
-    // LATER: anytime a command is run, we need to store that command + its output
-    //use state previousOutput
-
     switch (commandType) {
       case 'cd':
         this.cdCommand(commandArgs);
+        return null;
         break;
       case 'ls':
-        this.lsCommand(commandArgs[0]);
+        return this.lsCommand(commandArgs[0]);
         break;
       case 'pwd':
-        this.pwdCommand();
+        return this.pwdCommand();
         break;
       case 'touch':
         this.touchCommand(commandArgs);
+        return null;
         break;
       case 'mkdir':
         this.mkdirCommand(commandArgs);
+        return null;
         break;
       case 'rm':
         //code
         break;
       default:
-        console.log('you hit the default - this is not a command!');
+        return 'This is not a valid command!';
         break;
     }
 
-    this.setState({currentCommand: ''});
+    this.setState({currentCommand: []});
   }
 
   render() {
