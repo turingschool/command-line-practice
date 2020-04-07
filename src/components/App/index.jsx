@@ -37,10 +37,8 @@ class App extends React.Component {
 
       if (desiredPath.includes('..') || this.validRelationship(desiredPath[0])) {
         this.moveToValidDirectory(desiredPath);
-        //display previous command above command prompt
       } else {
         console.log(`cd: ${desiredPath[0]}: No such file or directory`);
-        //display previous command + output above command prompt
       }
     }
   }
@@ -91,12 +89,10 @@ class App extends React.Component {
     const commandType = command[0];
     const commandArgs = command.slice(1);
 
-    // LATER: anytime a command is run, we need to store that command + its output
-    //use state previousOutput
-
     switch (commandType) {
       case 'cd':
-        return this.cdCommand(commandArgs);
+        this.cdCommand(commandArgs);
+        return null;
         break;
       case 'ls':
         return this.lsCommand(commandArgs[0]);
@@ -105,16 +101,18 @@ class App extends React.Component {
         return this.pwdCommand();
         break;
       case 'touch':
-        return this.touchCommand(commandArgs);
+        this.touchCommand(commandArgs);
+        return null;
         break;
       case 'mkdir':
-        return this.mkdirCommand(commandArgs);
+        this.mkdirCommand(commandArgs);
+        return null;
         break;
       case 'rm':
         //code
         break;
       default:
-        console.log('you hit the default - this is not a command!');
+        return 'This is not a valid command!';
         break;
     }
 
