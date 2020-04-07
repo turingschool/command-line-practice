@@ -29,30 +29,33 @@ class App extends React.Component {
     return checkExistence && checkDirectory;
   }
 
-  cdCommand = (desiredPath) => {
+  cdCommand = (path) => {
 
-    if (!desiredPath.length) {
+    if (!path.length) {
       this.setState({ pathToCurrentLocation: [] });
     } else {
-      const splitDesiredPath = desiredPath[0].split("/");
+      const desiredPath = path[0].split("/");
 
-      if (splitDesiredPath.includes('..') || this.validRelationship(splitDesiredPath[0])) {
-        splitDesiredPath.forEach((el, index) => {
-          if (el === ".." || el === "") {
-            this.state.pathToCurrentLocation.pop();
-          } else {
-            if (this.validRelationship(splitDesiredPath[index])) {
-              this.state.pathToCurrentLocation.push(el);
-            }
-          }
-        });
+      if (desiredPath.includes('..') || this.validRelationship(desiredPath[0])) {
+        this.moveToValidDirectory(desiredPath);
         //display previous command above command prompt
       } else {
         console.log(`cd: ${desiredPath[0]}: No such file or directory`);
         //display previous command + output above command prompt
       }
-
     }
+  }
+
+  moveToValidDirectory = (desiredPath) => {
+    desiredPath.forEach((el, index) => {
+      if (el === ".." || el === "") {
+        this.state.pathToCurrentLocation.pop();
+      } else {
+        if (this.validRelationship(desiredPath[index])) {
+          this.state.pathToCurrentLocation.push(el);
+        }
+      }
+    });
   }
 
   mkdirCommand = (directoriesToMake) => {
