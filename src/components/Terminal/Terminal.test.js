@@ -30,7 +30,9 @@ describe('Terminal', () => {
     );
 
     fireEvent.change(getByLabelText("~"), { target: { value: "ls" }});
-    fireEvent.keyPress(getByLabelText("~"), { key: 'Enter', code: 'Enter' });
+    // TODO: Research why I can't fire this event. Issue here:
+    // https://github.com/testing-library/react-testing-library/issues/269
+    fireEvent.keyDown(getByLabelText("~"), { key: 'Enter', keyCode: '13' });
 
     expect(mockHandleSubmit).toHaveBeenCalled();
   });
