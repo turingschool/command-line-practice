@@ -41,10 +41,10 @@ class Terminal extends React.Component {
   render() {
     return (
       <div className="terminal-window">
-        <p>Welcome to the Turing Terminal!</p>
         {this.showPreviousOutput()}
-        <label>~</label>
+        <label htmlFor="command-input">~</label>
         <input
+          id="command-input"
           className="prompt-input"
           value={this.state.command}
           onChange={this.handleInput}
