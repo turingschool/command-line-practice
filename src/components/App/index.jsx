@@ -2,7 +2,7 @@ import React from 'react';
 import Nav from '../Nav';
 import Terminal from '../Terminal';
 import Map from '../Map';
-import './App.css';
+import './App.scss';
 
 class App extends React.Component {
   constructor() {
@@ -112,7 +112,7 @@ class App extends React.Component {
         //code
         break;
       default:
-        return 'This is not a valid command!';
+        return `${commandType}: command not found`;
         break;
     }
 
@@ -121,7 +121,7 @@ class App extends React.Component {
 
   render() {
     return (
-      <div className="App">
+      <div className="app">
         <Nav />
         <main>
           <Terminal handleNewCommand={this.handleNewCommand}/>

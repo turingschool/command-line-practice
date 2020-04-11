@@ -1,0 +1,29 @@
+.terminal-window {
+  background-color: #20232a;
+  color: #fff;
+  width: 45%;
+  border-radius: 3px;
+  padding: 1em;
+  height: 325px;
+  overflow-y: scroll;
+  margin-top: 2em;
+}
+
+.mono {
+  font-size: 1.5em;
+  font-family: 'Anonymous Pro', monospace;
+  margin: 0;
+}
+
+.prompt-input {
+  width: 90%;
+  background-color: #20232a;
+  color: #fff;
+  border: none;
+  outline: #20232a;
+  padding-left: 0.75em;
+}
+
+.output {
+  padding-left: 0.75em;
+}

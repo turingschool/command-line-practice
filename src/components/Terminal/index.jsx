@@ -1,5 +1,5 @@
 import React from 'react';
-import './terminal.css';
+import './Terminal.scss';
 
 class Terminal extends React.Component {
 
@@ -9,7 +9,6 @@ class Terminal extends React.Component {
       command: '',
       previousOutput: []
     }
-
   }
 
   handleInput = (event) => {
@@ -31,21 +30,28 @@ class Terminal extends React.Component {
     return this.state.previousOutput.map(pair => {
       return (
         <div>
-          <p>~ {pair.command}</p>
-          <p>{pair.output}</p>
+          <p className="mono">~
+            <span className="output">{pair.command}</span>
+          </p>
+          <p className="mono">{pair.output}</p>
         </div>
       )
     });
+  }
+
+  updateScroll = () => {
+    var element = document.querySelector(".terminal-window");
+    element.scrollTop = element.scrollHeight;
   }
 
   render() {
     return (
       <div className="terminal-window">
         {this.showPreviousOutput()}
-        <label htmlFor="command-input">~</label>
+        <label className="command-prompt mono" htmlFor="command-input">~</label>
         <input
           id="command-input"
-          className="prompt-input"
+          className="prompt-input mono"
           value={this.state.command}
           onChange={this.handleInput}
           onKeyPress={this.submitCommand} />
