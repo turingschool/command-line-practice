@@ -11,6 +11,7 @@ class App extends React.Component {
       directoryStructure: { turing: { classwork: {} }, personal: "" },
       pathToCurrentLocation: [],
       currentCommand: [],
+      currentExplanation: ""
     }
   }
 
@@ -89,6 +90,16 @@ class App extends React.Component {
     const commandType = command[0];
     const commandArgs = command.slice(1);
 
+    const explanations = {
+      'cd': 'You just ran cd.',
+      'ls': 'You just ran ls.',
+      'pwd': 'You just ran pwd.',
+      'touch': 'You just ran touch.',
+      'mkdir': 'You just ran mkdir.',
+     }
+
+    this.setState({currentExplanation: explanations[commandType]});
+    
     switch (commandType) {
       case 'cd':
         this.cdCommand(commandArgs);
@@ -112,20 +123,21 @@ class App extends React.Component {
         //code
         break;
       default:
+        this.setState({currentExplanation: 'You just ran a command that does not exist'});
         return `${commandType}: command not found`;
-        break;
     }
 
     this.setState({currentCommand: []});
   }
 
   render() {
+
     return (
       <div className="app">
         <Nav />
         <main>
           <Terminal handleNewCommand={this.handleNewCommand}/>
-          <Map />
+          <Map currentExplanation ={this.state.currentExplanation}/>
         </main>
       </div>
     );
