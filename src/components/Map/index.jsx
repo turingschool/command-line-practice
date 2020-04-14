@@ -1,12 +1,23 @@
 import React from 'react';
 import './Map.scss';
+import DirectoryViz from '../DirectoryViz';
+import FileViz from '../FileViz';
 
-const Map = ({currentExplanation}) => {
+const Map = ({currentExplanation, directoryStructure}) => {
+
+  const digIntoDirs = () => {
+    return <p>hiiii</p>
+  }
+
   return (
     <section>
+      <p>{digIntoDirs()}</p>
       <p>{currentExplanation}</p>
-      <p>telling you what the command you just ran does</p>
-      <p>telling you where you are in the dir structure</p>
+      <DirectoryViz />
+      <DirectoryViz />
+      <DirectoryViz />
+
+      <FileViz />
     </section>
   );
 }
