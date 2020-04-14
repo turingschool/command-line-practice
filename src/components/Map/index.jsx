@@ -1,23 +1,38 @@
 import React from 'react';
 import './Map.scss';
-import DirectoryViz from '../DirectoryViz';
-import FileViz from '../FileViz';
+import Visualization from '../FileViz';
 
 const Map = ({currentExplanation, directoryStructure}) => {
 
-  const digIntoDirs = () => {
-    return <p>hiiii</p>
+  const flattened = [];
+  const flattenMe = (obj) => {
+
+    Object.entries(obj).forEach(item => {
+      const type = item[1] === null ? "file" : "dir";
+      flattened.push({title: item[0], type});
+
+      if (item[1] !== null) {
+        flattenMe(item[1]);
+      }
+    });
+    return renderItems(flattened);
+  }
+
+  const renderItems = (flattened) => {
+    return flattened.map(item => {
+      return (
+        <Visualization
+          title={item.title}
+          type={item.type} />
+      );
+    });
   }
 
   return (
     <section>
-      <p>{digIntoDirs()}</p>
       <p>{currentExplanation}</p>
-      <DirectoryViz />
-      <DirectoryViz />
-      <DirectoryViz />
-
-      <FileViz />
+      <Visualization title="root" type="dir" />
+      {flattenMe(directoryStructure)}
     </section>
   );
 }
