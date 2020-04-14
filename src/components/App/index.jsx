@@ -8,7 +8,7 @@ class App extends React.Component {
   constructor() {
     super();
     this.state = {
-      directoryStructure: { turing: { classwork: {} }, personal: "" },
+      directoryStructure: { turing: { } },
       pathToCurrentLocation: [],
       currentCommand: [],
       currentExplanation: ""
@@ -99,7 +99,7 @@ class App extends React.Component {
      }
 
     this.setState({currentExplanation: explanations[commandType]});
-    
+
     switch (commandType) {
       case 'cd':
         this.cdCommand(commandArgs);
@@ -137,7 +137,9 @@ class App extends React.Component {
         <Nav />
         <main>
           <Terminal handleNewCommand={this.handleNewCommand}/>
-          <Map currentExplanation ={this.state.currentExplanation}/>
+          <Map
+            currentExplanation={this.state.currentExplanation}
+            directoryStructure={this.state.directoryStructure}  />
         </main>
       </div>
     );
