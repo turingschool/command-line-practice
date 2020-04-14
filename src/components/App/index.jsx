@@ -8,7 +8,7 @@ class App extends React.Component {
   constructor() {
     super();
     this.state = {
-      directoryStructure: { turing: { } },
+      directoryStructure: { turing: { classwork: {}, index: null }, personal: { }, bills: null },
       pathToCurrentLocation: [],
       currentCommand: [],
       currentExplanation: ""

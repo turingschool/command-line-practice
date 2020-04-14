@@ -1,16 +1,19 @@
 import React from 'react';
 import './FileViz.scss';
 import fileImg from './assets/file.png';
+import dirImg from './assets/directory.jpg';
 import arrow from './assets/curved-arrow.png';
 
-const FileViz = () => {
+const Visualization = ({title, type}) => {
+  const image = type === "dir" ? dirImg : fileImg;
+
   return (
     <div className="directory third">
       <img className="arrow" src={arrow} alt="Arrow coming from parent directory"/>
-      <img src={fileImg} alt="File folder"/>
-      <p>file name will go here, from props</p>
+      <img src={image} alt={image}/>
+      <p>{title}</p>
     </div>
   );
 }
 
-export default FileViz;
+export default Visualization;
