@@ -39,11 +39,6 @@ class Terminal extends React.Component {
     });
   }
 
-  updateScroll = () => {
-    var element = document.querySelector(".terminal-window");
-    element.scrollTop = element.scrollHeight;
-  }
-
   render() {
     return (
       <div className="terminal-window">
