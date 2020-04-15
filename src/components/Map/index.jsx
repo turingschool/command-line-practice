@@ -1,29 +1,16 @@
 import React from 'react';
 import './Map.scss';
-import Visualization from '../FileViz';
+import Visualization from '../Visualization';
 
-const Map = ({currentExplanation, directoryStructure}) => {
+const Map = ({currentExplanation, directoryStructure, mapData}) => {
 
-  const flattened = [];
-  const flattenMe = (obj) => {
-
-    Object.entries(obj).forEach(item => {
-      const type = item[1] === null ? "file" : "dir";
-      flattened.push({title: item[0], type});
-
-      if (item[1] !== null) {
-        flattenMe(item[1]);
-      }
-    });
-    return renderItems(flattened);
-  }
-
-  const renderItems = (flattened) => {
-    return flattened.map(item => {
+  const displayMapData = () => {
+    return mapData.map(item => {
       return (
         <Visualization
           title={item.title}
-          type={item.type} />
+          type={item.type}
+          levelFromRoot={item.levelFromRoot} />
       );
     });
   }
@@ -31,8 +18,8 @@ const Map = ({currentExplanation, directoryStructure}) => {
   return (
     <section>
       <p>{currentExplanation}</p>
-      <Visualization title="root" type="dir" />
-      {flattenMe(directoryStructure)}
+      <Visualization title="root" type="dir" levelFromRoot="0" />
+      {displayMapData()}
     </section>
   );
 }

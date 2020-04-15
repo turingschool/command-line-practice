@@ -1,10 +1,26 @@
 .directory {
-  border: 1px solid red;
+  border: 1px solid pink;
 
   p {
     margin: 0;
   }
 
+}
+
+.level-0 {
+  border: 1px solid blue;
+}
+
+.level-1 {
+  border: 1px solid purple;
+}
+
+.level-2 {
+  border: 1px solid magenta;
+}
+
+.level-3 {
+  border: 1px solid orange;
 }
 
 .arrow {
