@@ -8,10 +8,37 @@ class App extends React.Component {
   constructor() {
     super();
     this.state = {
-      directoryStructure: { turing: { classwork: {}, index: null }, personal: { }, bills: null },
+      directoryStructure: {
+        turing: {
+          classwork: {},
+        },
+        bills: null
+      },
       pathToCurrentLocation: [],
       currentCommand: [],
-      currentExplanation: ""
+      currentExplanation: "",
+      mapData: [
+        {title: "turing", type: "dir", levelFromRoot: 0},
+        {title: "classwork", type: "dir", levelFromRoot: 1},
+        {title: "turing", type: "file", levelFromRoot: 0},
+      ]
+    }
+
+  }
+
+  updateMapData = (title, type) => {
+    const path = this.state.pathToCurrentLocation;
+    const levelFromRoot = path.length;
+    const newItem = {title, type, levelFromRoot};
+
+    if (levelFromRoot === 0) {
+      this.state.mapData.push(newItem);
+    } else {
+      this.state.mapData.forEach((el, index) => {
+        if (el.title === path[path.length -1]) {
+          this.state.mapData.splice(index + 1, 0, newItem);
+        }
+      });
     }
   }
 
@@ -59,8 +86,9 @@ class App extends React.Component {
   mkdirCommand = (directoriesToMake) => {
     const directDescendants = this.findDirectDescendants();
 
-    directoriesToMake.forEach(el => {
-      directDescendants[el] = {};
+    directoriesToMake.forEach(title => {
+      directDescendants[title] = {};
+      this.updateMapData(title, "dir");
     });
   }
 
@@ -76,8 +104,9 @@ class App extends React.Component {
   touchCommand = (filesToMake) => {
     const directDescendants = this.findDirectDescendants();
 
-    filesToMake.forEach(el => {
-      directDescendants[el] = "";
+    filesToMake.forEach(title => {
+      directDescendants[title] = "";
+      this.updateMapData(title, "file");
     });
   }
 
@@ -131,13 +160,13 @@ class App extends React.Component {
   }
 
   render() {
-
     return (
       <div className="app">
         <Nav />
         <main>
           <Terminal handleNewCommand={this.handleNewCommand}/>
           <Map
+            mapData={this.state.mapData}
             currentExplanation={this.state.currentExplanation}
             directoryStructure={this.state.directoryStructure}  />
         </main>
