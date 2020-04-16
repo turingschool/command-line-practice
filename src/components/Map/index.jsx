@@ -1,12 +1,25 @@
 import React from 'react';
 import './Map.scss';
+import Visualization from '../Visualization';
 
-const Map = () => {
+const Map = ({currentExplanation, directoryStructure, mapData}) => {
+
+  const displayMapData = () => {
+    return mapData.map(item => {
+      return (
+        <Visualization
+          title={item.title}
+          type={item.type}
+          levelFromRoot={item.levelFromRoot} />
+      );
+    });
+  }
+
   return (
     <section>
-      <p>this is the map</p>
-      <p>telling you what the command you just ran does</p>
-      <p>telling you where you are in the dir structure</p>
+      <p>{currentExplanation}</p>
+      <Visualization title="root" type="dir" levelFromRoot="0" />
+      {displayMapData()}
     </section>
   );
 }

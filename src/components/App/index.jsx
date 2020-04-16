@@ -8,9 +8,37 @@ class App extends React.Component {
   constructor() {
     super();
     this.state = {
-      directoryStructure: { turing: { classwork: {} }, personal: "" },
+      directoryStructure: {
+        turing: {
+          classwork: {},
+        },
+        bills: null
+      },
       pathToCurrentLocation: [],
       currentCommand: [],
+      currentExplanation: "",
+      mapData: [
+        {title: "turing", type: "dir", levelFromRoot: 0},
+        {title: "classwork", type: "dir", levelFromRoot: 1},
+        {title: "turing", type: "file", levelFromRoot: 0},
+      ]
+    }
+
+  }
+
+  updateMapData = (title, type) => {
+    const path = this.state.pathToCurrentLocation;
+    const levelFromRoot = path.length;
+    const newItem = {title, type, levelFromRoot};
+
+    if (levelFromRoot === 0) {
+      this.state.mapData.push(newItem);
+    } else {
+      this.state.mapData.forEach((el, index) => {
+        if (el.title === path[path.length -1]) {
+          this.state.mapData.splice(index + 1, 0, newItem);
+        }
+      });
     }
   }
 
@@ -58,8 +86,9 @@ class App extends React.Component {
   mkdirCommand = (directoriesToMake) => {
     const directDescendants = this.findDirectDescendants();
 
-    directoriesToMake.forEach(el => {
-      directDescendants[el] = {};
+    directoriesToMake.forEach(title => {
+      directDescendants[title] = {};
+      this.updateMapData(title, "dir");
     });
   }
 
@@ -75,8 +104,9 @@ class App extends React.Component {
   touchCommand = (filesToMake) => {
     const directDescendants = this.findDirectDescendants();
 
-    filesToMake.forEach(el => {
-      directDescendants[el] = "";
+    filesToMake.forEach(title => {
+      directDescendants[title] = "";
+      this.updateMapData(title, "file");
     });
   }
 
@@ -88,6 +118,16 @@ class App extends React.Component {
     this.setState({ currentCommand: command });
     const commandType = command[0];
     const commandArgs = command.slice(1);
+
+    const explanations = {
+      'cd': 'You just ran cd.',
+      'ls': 'You just ran ls.',
+      'pwd': 'You just ran pwd.',
+      'touch': 'You just ran touch.',
+      'mkdir': 'You just ran mkdir.',
+     }
+
+    this.setState({currentExplanation: explanations[commandType]});
 
     switch (commandType) {
       case 'cd':
@@ -112,8 +152,8 @@ class App extends React.Component {
         //code
         break;
       default:
+        this.setState({currentExplanation: 'You just ran a command that does not exist'});
         return `${commandType}: command not found`;
-        break;
     }
 
     this.setState({currentCommand: []});
@@ -125,7 +165,10 @@ class App extends React.Component {
         <Nav />
         <main>
           <Terminal handleNewCommand={this.handleNewCommand}/>
-          <Map />
+          <Map
+            mapData={this.state.mapData}
+            currentExplanation={this.state.currentExplanation}
+            directoryStructure={this.state.directoryStructure}  />
         </main>
       </div>
     );
