@@ -1,0 +1,39 @@
+.directory {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.level-0 {
+  // border: 1px solid blue;
+}
+
+.level-1 {
+  // border: 1px solid purple;
+  padding-left: 3em;
+}
+
+.level-2 {
+  // border: 1px solid magenta;
+  padding-left: 6em;
+}
+
+.level-3 {
+  // border: 1px solid orange;
+  padding-left: 9em;
+}
+
+.level-4 {
+  // border: 1px solid teal;
+  padding-left: 12em;
+}
+
+.dir-file-image {
+  height: 30px;
+}
+
+.dir-file-title {
+  padding-left: 5px;
+  margin-top: 0;
+}
