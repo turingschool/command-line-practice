@@ -18,8 +18,10 @@ const Map = ({currentExplanation, directoryStructure, mapData}) => {
   return (
     <section className="map-container">
       <p>{currentExplanation}</p>
-      <Visualization title="root" type="dir" levelFromRoot="0" />
-      {displayMapData()}
+      <div class="visualizations">
+        <Visualization title="root" type="dir" levelFromRoot="0" />
+        {displayMapData()}
+      </div>
     </section>
   );
 }
