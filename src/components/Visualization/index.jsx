@@ -1,12 +1,12 @@
 import React from 'react';
 import './FileViz.scss';
 import fileImg from './assets/file.png';
-import dirImg from './assets/directory.jpg';
+import dirImg from './assets/dir.svg';
 
 const Visualization = ({title, type, levelFromRoot}) => {
 
   return (
-    <div className={`level-${levelFromRoot} directory`}>
+    <div className={`level-${levelFromRoot} ${type}`}>
       <img
         className="dir-file-image"
         src={type === "dir" ? dirImg : fileImg}
