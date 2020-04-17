@@ -1,18 +1,18 @@
 import React from 'react';
 import './FileViz.scss';
 import fileImg from './assets/file.png';
-import dirImg from './assets/directory.jpg';
-import arrow from './assets/curved-arrow.png';
+import dirImg from './assets/dir.svg';
 
 const Visualization = ({title, type, levelFromRoot}) => {
-  const image = type === "dir" ? dirImg : fileImg;
-  const className = `level-${levelFromRoot}`;
 
   return (
-    <div className={className}>
-      <img className="arrow" src={arrow} alt="Arrow coming from parent directory"/>
-      <img src={image} alt={image}/>
-      <p>{title}</p>
+    <div className={`level-${levelFromRoot} ${type}`}>
+      <img
+        className="dir-file-image"
+        src={type === "dir" ? dirImg : fileImg}
+        alt={type === "dir" ? "File folder icon" : "File icon"}
+      />
+      <p class="dir-file-title">{title}</p>
     </div>
   );
 }

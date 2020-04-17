@@ -1,49 +1,9 @@
-.directory {
-  border: 1px solid pink;
-
-  p {
-    margin: 0;
-  }
-
+.map-container {
+  width: 45%;
+  margin-top: 2em;
 }
 
-.level-0 {
-  border: 1px solid blue;
-}
-
-.level-1 {
-  border: 1px solid purple;
-}
-
-.level-2 {
-  border: 1px solid magenta;
-}
-
-.level-3 {
-  border: 1px solid orange;
-}
-
-.arrow {
-  position: absolute;
-  height: 30px;
-  top: 0;
-}
-.second {
-  padding-left: 4em;
-  position: relative;
-  .arrow {
-    left: 0;
-  }
-}
-
-.third {
-  padding-left: 8em;
-  position: relative;
-  .arrow {
-    left: 4rem;
-  }
-}
-
-img {
-  height: 50px;
+.visualizations {
+  overflow-y: scroll;
+  height: 32em;
 }

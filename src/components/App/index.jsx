@@ -18,9 +18,9 @@ class App extends React.Component {
       currentCommand: [],
       currentExplanation: "",
       mapData: [
-        {title: "turing", type: "dir", levelFromRoot: 0},
-        {title: "classwork", type: "dir", levelFromRoot: 1},
-        {title: "turing", type: "file", levelFromRoot: 0},
+        {title: "turing", type: "dir", levelFromRoot: 1},
+        {title: "classwork", type: "dir", levelFromRoot: 2},
+        {title: "bills.txt", type: "file", levelFromRoot: 1},
       ]
     }
 
@@ -28,10 +28,10 @@ class App extends React.Component {
 
   updateMapData = (title, type) => {
     const path = this.state.pathToCurrentLocation;
-    const levelFromRoot = path.length;
+    const levelFromRoot = path.length + 1;
     const newItem = {title, type, levelFromRoot};
 
-    if (levelFromRoot === 0) {
+    if (levelFromRoot === 1) {
       this.state.mapData.push(newItem);
     } else {
       this.state.mapData.forEach((el, index) => {
