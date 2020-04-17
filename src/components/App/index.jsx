@@ -42,14 +42,15 @@ class App extends React.Component {
     }
   }
 
-  findDirectDescendants = () => {
-    return this.state.pathToCurrentLocation.reduce((acc, level) => {
+  findDirectDescendants = (path) => {
+    // most use this.state.pathToCurrentLocation
+    return path.reduce((acc, level) => {
       return acc[level];
     }, this.state.directoryStructure);
   }
 
   validRelationship = (nextDesiredDir) => {
-    const descendants = this.findDirectDescendants();
+    const descendants = this.findDirectDescendants(this.state.pathToCurrentLocation);
     const checkDirectory = typeof descendants[nextDesiredDir] === "object";
     const checkExistence = Object.keys(descendants).includes(nextDesiredDir);
 
@@ -84,7 +85,7 @@ class App extends React.Component {
   }
 
   mkdirCommand = (directoriesToMake) => {
-    const directDescendants = this.findDirectDescendants();
+    const directDescendants = this.findDirectDescendants(this.state.pathToCurrentLocation);
 
     directoriesToMake.forEach(title => {
       directDescendants[title] = {};
@@ -94,7 +95,7 @@ class App extends React.Component {
 
   lsCommand = (commandArg) => {
     if (!commandArg) {
-      const directDescendants = Object.keys(this.findDirectDescendants())
+      const directDescendants = Object.keys(this.findDirectDescendants(this.state.pathToCurrentLocation))
       return directDescendants.join(' ');
     } else {
       return 'this command line does not have the capability to run `ls` with an argument!';
@@ -102,7 +103,7 @@ class App extends React.Component {
   }
 
   touchCommand = (filesToMake) => {
-    const directDescendants = this.findDirectDescendants();
+    const directDescendants = this.findDirectDescendants(this.state.pathToCurrentLocation);
 
     filesToMake.forEach(title => {
       directDescendants[title] = "";
@@ -112,6 +113,39 @@ class App extends React.Component {
 
   pwdCommand = () => {
     return `root/${this.state.pathToCurrentLocation.join("/")}`;
+  }
+
+  rmCommand = (commandArgs) => {
+    // can pass multiple arguments
+    console.log(commandArgs);
+  }
+
+  rmdirCommand = (commandArgs) => {
+    const descendants = Object.keys(this.findDirectDescendants(this.state.pathToCurrentLocation));
+    const path = [...this.state.pathToCurrentLocation];
+
+    return commandArgs.forEach(dir => {
+      path.push(dir);
+      const pathToDelete = this.findDirectDescendants(path);
+
+      if (descendants.includes(dir) & Object.keys(pathToDelete).length === 0) {
+        delete this.findDirectDescendants(this.state.pathToCurrentLocation)[dir];
+        this.removeItemFromMapData(path);
+        //things break if a user runs this command on a file
+      } else {
+        return "don't delete - send error message";
+      }
+      path.pop();
+    });
+    
+  }
+
+  removeItemFromMapData = (path) => {
+    this.state.mapData.forEach((el, index, mapData) => {
+      if (el.levelFromRoot === path.length) {
+        mapData.splice(index, 1);
+      }
+    });
   }
 
   handleNewCommand = (command) => {
@@ -149,7 +183,10 @@ class App extends React.Component {
         return null;
         break;
       case 'rm':
-        //code
+        this.rmCommand(commandArgs);
+        break;
+      case 'rmdir':
+        return this.rmdirCommand(commandArgs);
         break;
       default:
         this.setState({currentExplanation: 'You just ran a command that does not exist'});
