@@ -124,20 +124,26 @@ class App extends React.Component {
     const descendants = Object.keys(this.findDirectDescendants(this.state.pathToCurrentLocation));
     const path = [...this.state.pathToCurrentLocation];
 
-    return commandArgs.forEach(dir => {
+    let result = null;
+
+    commandArgs.forEach(dir => {
       path.push(dir);
       const pathToDelete = this.findDirectDescendants(path);
 
-      if (descendants.includes(dir) & Object.keys(pathToDelete).length === 0) {
-        delete this.findDirectDescendants(this.state.pathToCurrentLocation)[dir];
-        this.removeItemFromMapData(path);
-        //things break if a user runs this command on a file
+      if (descendants.includes(dir)) {
+        if (Object.keys(pathToDelete).length === 0) {
+          delete this.findDirectDescendants(this.state.pathToCurrentLocation)[dir];
+          this.removeItemFromMapData(path);
+        } else {
+          result = `rmdir: ${dir}: Directory not empty`;
+        }
       } else {
-        return "don't delete - send error message";
+        result = `rmdir: ${dir}: No such file or directory`;
       }
       path.pop();
     });
-    
+
+    return result;
   }
 
   removeItemFromMapData = (path) => {
