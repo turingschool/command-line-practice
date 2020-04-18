@@ -12,7 +12,7 @@ class App extends React.Component {
         turing: {
           classwork: {},
         },
-        bills: null
+        "bills.txt": null
       },
       pathToCurrentLocation: [],
       currentCommand: [],
@@ -43,7 +43,6 @@ class App extends React.Component {
   }
 
   findDirectDescendants = (path) => {
-    // most use this.state.pathToCurrentLocation
     return path.reduce((acc, level) => {
       return acc[level];
     }, this.state.directoryStructure);
@@ -116,10 +115,33 @@ class App extends React.Component {
   }
 
   rmCommand = (commandArgs) => {
-    //similar to rmdir BUT don't need to check for empty contents
-    // need to verify its a file type
-    console.log(commandArgs);
+    const descendants = this.findDirectDescendants(this.state.pathToCurrentLocation)
+    const descendantList = Object.keys(descendants);
+    const path = [...this.state.pathToCurrentLocation];
+
+    let result = null;
+
+    commandArgs.forEach(file => {
+      path.push(file);
+      const pathToDelete = this.findDirectDescendants(path);
+
+      if (descendants[file] !== null) {
+        result = `rm: ${file}: is a directory`
+        return;
+      }
+
+      if (descendantList.includes(file)) {
+        this.removeItemFromMapData(path, "file");
+      } else {
+        result = `rm: ${file}: No such file or directory`;
+      }
+
+      path.pop();
+    });
+
+    return result;
   }
+
 
   rmdirCommand = (commandArgs) => {
     const descendants = this.findDirectDescendants(this.state.pathToCurrentLocation)
@@ -132,7 +154,7 @@ class App extends React.Component {
       path.push(dir);
       const pathToDelete = this.findDirectDescendants(path);
 
-      if (typeof descendants[dir] !== "object") {
+      if (descendants[dir] === null) {
         result = `rmdir: ${dir}: Not a directory`
         return;
       }
@@ -140,7 +162,7 @@ class App extends React.Component {
       if (descendantList.includes(dir)) {
         if (Object.keys(pathToDelete).length === 0) {
           delete this.findDirectDescendants(this.state.pathToCurrentLocation)[dir];
-          this.removeItemFromMapData(path);
+          this.removeItemFromMapData(path, "dir");
         } else {
           result = `rmdir: ${dir}: Directory not empty`;
         }
@@ -153,9 +175,9 @@ class App extends React.Component {
     return result;
   }
 
-  removeItemFromMapData = (path) => {
+  removeItemFromMapData = (path, type) => {
     this.state.mapData.forEach((el, index, mapData) => {
-      if (el.levelFromRoot === path.length) {
+      if (el.levelFromRoot === path.length && type === el.type) {
         mapData.splice(index, 1);
       }
     });
@@ -196,7 +218,7 @@ class App extends React.Component {
         return null;
         break;
       case 'rm':
-        this.rmCommand(commandArgs);
+        return this.rmCommand(commandArgs);
         break;
       case 'rmdir':
         return this.rmdirCommand(commandArgs);
