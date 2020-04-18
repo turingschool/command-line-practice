@@ -116,12 +116,14 @@ class App extends React.Component {
   }
 
   rmCommand = (commandArgs) => {
-    // can pass multiple arguments
+    //similar to rmdir BUT don't need to check for empty contents
+    // need to verify its a file type
     console.log(commandArgs);
   }
 
   rmdirCommand = (commandArgs) => {
-    const descendants = Object.keys(this.findDirectDescendants(this.state.pathToCurrentLocation));
+    const descendants = this.findDirectDescendants(this.state.pathToCurrentLocation)
+    const descendantList = Object.keys(descendants);
     const path = [...this.state.pathToCurrentLocation];
 
     let result = null;
@@ -130,7 +132,12 @@ class App extends React.Component {
       path.push(dir);
       const pathToDelete = this.findDirectDescendants(path);
 
-      if (descendants.includes(dir)) {
+      if (typeof descendants[dir] !== "object") {
+        result = `rmdir: ${dir}: Not a directory`
+        return;
+      }
+
+      if (descendantList.includes(dir)) {
         if (Object.keys(pathToDelete).length === 0) {
           delete this.findDirectDescendants(this.state.pathToCurrentLocation)[dir];
           this.removeItemFromMapData(path);
