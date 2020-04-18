@@ -114,26 +114,21 @@ class App extends React.Component {
     return `root/${this.state.pathToCurrentLocation.join("/")}`;
   }
 
-  rmCommand = (commandArgs) => {
+  removeCommands = (commandArgs, command) => {
     const descendants = this.findDirectDescendants(this.state.pathToCurrentLocation)
     const descendantList = Object.keys(descendants);
     const path = [...this.state.pathToCurrentLocation];
 
     let result = null;
 
-    commandArgs.forEach(file => {
-      path.push(file);
+    commandArgs.forEach(item => {
+      path.push(item);
       const pathToDelete = this.findDirectDescendants(path);
 
-      if (descendants[file] !== null) {
-        result = `rm: ${file}: is a directory`
-        return;
-      }
-
-      if (descendantList.includes(file)) {
-        this.removeItemFromMapData(path, "file");
-      } else {
-        result = `rm: ${file}: No such file or directory`;
+      if (command === 'rm') {
+        result = this.rmCommand(descendants, descendantList, item, path);
+      } else if (command === 'rmdir') {
+        result = this.rmdirCommand(descendants, descendantList, item, path, pathToDelete);
       }
 
       path.pop();
@@ -143,34 +138,42 @@ class App extends React.Component {
   }
 
 
-  rmdirCommand = (commandArgs) => {
-    const descendants = this.findDirectDescendants(this.state.pathToCurrentLocation)
-    const descendantList = Object.keys(descendants);
-    const path = [...this.state.pathToCurrentLocation];
-
+  rmCommand = (descendants, descendantList, file, path) => {
     let result = null;
 
-    commandArgs.forEach(dir => {
-      path.push(dir);
-      const pathToDelete = this.findDirectDescendants(path);
+    if (descendants[file] !== null) {
+      result = `rm: ${file}: is a directory`
+      return;
+    }
 
-      if (descendants[dir] === null) {
-        result = `rmdir: ${dir}: Not a directory`
-        return;
-      }
+    if (descendantList.includes(file)) {
+      delete this.findDirectDescendants(this.state.pathToCurrentLocation)[file];
+      this.removeItemFromMapData(path, "file");
+    } else {
+      result = `rm: ${file}: No such file or directory`;
+    }
 
-      if (descendantList.includes(dir)) {
-        if (Object.keys(pathToDelete).length === 0) {
-          delete this.findDirectDescendants(this.state.pathToCurrentLocation)[dir];
-          this.removeItemFromMapData(path, "dir");
-        } else {
-          result = `rmdir: ${dir}: Directory not empty`;
-        }
+    return result;
+  }
+
+  rmdirCommand = (descendants, descendantList, dir, path, pathToDelete) => {
+    let result = null;
+
+    if (descendants[dir] === null) {
+      result = `rmdir: ${dir}: Not a directory`
+      return;
+    }
+
+    if (descendantList.includes(dir)) {
+      if (Object.keys(pathToDelete).length === 0) {
+        delete this.findDirectDescendants(this.state.pathToCurrentLocation)[dir];
+        this.removeItemFromMapData(path, "dir");
       } else {
-        result = `rmdir: ${dir}: No such file or directory`;
+        result = `rmdir: ${dir}: Directory not empty`;
       }
-      path.pop();
-    });
+    } else {
+      result = `rmdir: ${dir}: No such file or directory`;
+    }
 
     return result;
   }
@@ -194,6 +197,8 @@ class App extends React.Component {
       'pwd': 'You just ran pwd.',
       'touch': 'You just ran touch.',
       'mkdir': 'You just ran mkdir.',
+      'rm': 'You just ran rm',
+      'rmdir': 'You just ran rmdir',
      }
 
     this.setState({currentExplanation: explanations[commandType]});
@@ -218,10 +223,10 @@ class App extends React.Component {
         return null;
         break;
       case 'rm':
-        return this.rmCommand(commandArgs);
+        return this.removeCommands(commandArgs, 'rm');
         break;
       case 'rmdir':
-        return this.rmdirCommand(commandArgs);
+        return this.removeCommands(commandArgs, 'rmdir');
         break;
       default:
         this.setState({currentExplanation: 'You just ran a command that does not exist'});
