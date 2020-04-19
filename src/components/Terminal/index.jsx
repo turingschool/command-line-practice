@@ -21,8 +21,12 @@ class Terminal extends React.Component {
       const splitCommand = command.split(' ');
       const output = this.props.handleNewCommand(splitCommand);
 
-      this.state.previousOutput.push({command, output});
-      this.setState({command: ''});
+      this.setState(state => {
+        return {
+          previousOutput: [...state.previousOutput, {command, output}],
+          command: '',
+        }
+      });
     }
   }
 
@@ -33,7 +37,7 @@ class Terminal extends React.Component {
       </p>
     );
   }
-  
+
   showPreviousOutput = () => {
     return this.state.previousOutput.map(pair => {
       return (
