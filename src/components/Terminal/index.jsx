@@ -26,6 +26,14 @@ class Terminal extends React.Component {
     }
   }
 
+  showWelcomeMessage = () => {
+    return (
+      <p className="mono">~
+        <span className="output">Welcome! Type in any command...</span>
+      </p>
+    );
+  }
+  
   showPreviousOutput = () => {
     return this.state.previousOutput.map(pair => {
       return (
@@ -42,14 +50,21 @@ class Terminal extends React.Component {
   render() {
     return (
       <div className="terminal-window">
+        {this.showWelcomeMessage()}
         {this.showPreviousOutput()}
-        <label className="command-prompt mono" htmlFor="command-input">~</label>
+        <label
+          className="command-prompt mono"
+          htmlFor="command-input"
+        >
+          ~
+        </label>
         <input
           id="command-input"
           className="prompt-input mono"
           value={this.state.command}
           onChange={this.handleInput}
-          onKeyPress={this.submitCommand} />
+          onKeyPress={this.submitCommand}
+        />
       </div>
     );
   }
