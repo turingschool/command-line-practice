@@ -39,9 +39,9 @@ class Terminal extends React.Component {
   }
 
   showPreviousOutput = () => {
-    return this.state.previousOutput.map(pair => {
+    return this.state.previousOutput.map((pair, index) => {
       return (
-        <div>
+        <div key={index}>
           <p className="mono">~
             <span className="output">{pair.command}</span>
           </p>
