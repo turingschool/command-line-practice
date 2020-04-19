@@ -32,7 +32,9 @@ class App extends React.Component {
     const newItem = {title, type, levelFromRoot};
 
     if (levelFromRoot === 1) {
-      this.state.mapData.push(newItem);
+      this.setState(state => {
+        return { mapData: [...state.mapData, newItem] }
+      });
     } else {
       this.state.mapData.forEach((el, index) => {
         if (el.title === path[path.length -1]) {
@@ -77,7 +79,11 @@ class App extends React.Component {
         this.state.pathToCurrentLocation.pop();
       } else {
         if (this.validRelationship(desiredPath[index])) {
-          this.state.pathToCurrentLocation.push(el);
+          this.setState(state => {
+            return {
+              pathToCurrentLocation: [...state.pathToCurrentLocation, el]
+            }
+          });
         }
       }
     });
