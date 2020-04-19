@@ -12,7 +12,7 @@ const Visualization = ({title, type, levelFromRoot}) => {
         src={type === "dir" ? dirImg : fileImg}
         alt={type === "dir" ? "File folder icon" : "File icon"}
       />
-      <p class="dir-file-title">{title}</p>
+      <p className="dir-file-title">{title}</p>
     </div>
   );
 }
