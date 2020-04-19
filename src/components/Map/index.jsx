@@ -5,9 +5,10 @@ import Visualization from '../Visualization';
 const Map = ({currentExplanation, directoryStructure, mapData}) => {
 
   const displayMapData = () => {
-    return mapData.map(item => {
+    return mapData.map((item, index) => {
       return (
         <Visualization
+          key={index}
           title={item.title}
           type={item.type}
           levelFromRoot={item.levelFromRoot}
