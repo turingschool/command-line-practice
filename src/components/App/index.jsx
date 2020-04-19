@@ -16,7 +16,7 @@ class App extends React.Component {
       },
       pathToCurrentLocation: [],
       currentCommand: [],
-      currentExplanation: "",
+      currentExplanation: '',
       mapData: [
         {title: "turing", type: "dir", levelFromRoot: 1},
         {title: "classwork", type: "dir", levelFromRoot: 2},
@@ -32,7 +32,9 @@ class App extends React.Component {
     const newItem = {title, type, levelFromRoot};
 
     if (levelFromRoot === 1) {
-      this.state.mapData.push(newItem);
+      this.setState(state => {
+        return { mapData: [...state.mapData, newItem] }
+      });
     } else {
       this.state.mapData.forEach((el, index) => {
         if (el.title === path[path.length -1]) {
@@ -50,7 +52,7 @@ class App extends React.Component {
 
   validRelationship = (nextDesiredDir) => {
     const descendants = this.findDirectDescendants(this.state.pathToCurrentLocation);
-    const checkDirectory = typeof descendants[nextDesiredDir] === "object";
+    const checkDirectory = typeof descendants[nextDesiredDir] === 'object';
     const checkExistence = Object.keys(descendants).includes(nextDesiredDir);
 
     return checkExistence && checkDirectory;
@@ -73,11 +75,15 @@ class App extends React.Component {
 
   moveToValidDirectory = (desiredPath) => {
     desiredPath.forEach((el, index) => {
-      if (el === ".." || el === "") {
+      if (el === '..' || el === '') {
         this.state.pathToCurrentLocation.pop();
       } else {
         if (this.validRelationship(desiredPath[index])) {
-          this.state.pathToCurrentLocation.push(el);
+          this.setState(state => {
+            return {
+              pathToCurrentLocation: [...state.pathToCurrentLocation, el]
+            }
+          });
         }
       }
     });
@@ -105,8 +111,8 @@ class App extends React.Component {
     const directDescendants = this.findDirectDescendants(this.state.pathToCurrentLocation);
 
     filesToMake.forEach(title => {
-      directDescendants[title] = "";
-      this.updateMapData(title, "file");
+      directDescendants[title] = '';
+      this.updateMapData(title, 'file');
     });
   }
 
@@ -136,7 +142,6 @@ class App extends React.Component {
 
     return result;
   }
-
 
   rmCommand = (descendants, descendantList, file, path) => {
     let result = null;

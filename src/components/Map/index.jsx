@@ -5,12 +5,14 @@ import Visualization from '../Visualization';
 const Map = ({currentExplanation, directoryStructure, mapData}) => {
 
   const displayMapData = () => {
-    return mapData.map(item => {
+    return mapData.map((item, index) => {
       return (
         <Visualization
+          key={index}
           title={item.title}
           type={item.type}
-          levelFromRoot={item.levelFromRoot} />
+          levelFromRoot={item.levelFromRoot}
+        />
       );
     });
   }
@@ -18,7 +20,7 @@ const Map = ({currentExplanation, directoryStructure, mapData}) => {
   return (
     <section className="map-container">
       <p>{currentExplanation}</p>
-      <div class="visualizations">
+      <div className="visualizations">
         <Visualization title="root" type="dir" levelFromRoot="0" />
         {displayMapData()}
       </div>
