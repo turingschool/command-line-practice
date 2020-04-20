@@ -8,6 +8,7 @@
   border-radius: 3px;
   margin-bottom: 3px;
   padding-left: 1em;
+  padding-right: 1em;
 }
 
 .file {
@@ -42,4 +43,6 @@
 
 .dir-file-title {
   padding-left: 5px;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }

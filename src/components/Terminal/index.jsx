@@ -33,7 +33,7 @@ class Terminal extends React.Component {
 
   showWelcomeMessage = () => {
     return (
-      <p className="mono">~
+      <p className="mono welcome">~
         <span className="output">Welcome! Type in any command...</span>
       </p>
     );
