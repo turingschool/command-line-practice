@@ -6,8 +6,9 @@ class Terminal extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      index: null,
       command: '',
-      previousOutput: []
+      previousOutput: [{command: '', output: ''}]
     }
   }
 
@@ -40,15 +41,52 @@ class Terminal extends React.Component {
 
   showPreviousOutput = () => {
     return this.state.previousOutput.map((pair, index) => {
-      return (
-        <div key={index}>
-          <p className="mono">~
+      if (pair.command) {
+        return (
+          <div key={index}>
+            <p className="mono">~
             <span className="output">{pair.command}</span>
-          </p>
-          <p className="mono">{pair.output}</p>
-        </div>
-      )
+            </p>
+            <p className="mono">{pair.output}</p>
+          </div>
+        )
+      }
     });
+  }
+
+  cycleCommands = (event) => {
+    const indexToCheck = this.state.index === null ? this.state.previousOutput.length : this.state.index;
+
+    if (event.key === "ArrowUp") {
+      this.showPreviousCommand(indexToCheck);
+    } else if (event.key === "ArrowDown") {
+      this.showNextCommand(indexToCheck);
+    }
+  }
+
+  showPreviousCommand = (indexToCheck) => {
+    if (this.state.previousOutput[indexToCheck - 1]) {
+      this.setState({
+        index: indexToCheck - 1,
+        command: this.state.previousOutput[indexToCheck - 1].command,
+      });
+    } else {
+      this.setState({index: null});
+    }
+  }
+
+  showNextCommand = (indexToCheck) => {
+    if (this.state.previousOutput[indexToCheck + 1]) {
+      this.setState({
+        index: indexToCheck + 1,
+        command: this.state.previousOutput[indexToCheck + 1].command,
+      });
+    } else {
+      this.setState({
+        index: null,
+        command: '',
+      });
+    }
   }
 
   render() {
@@ -68,6 +106,7 @@ class Terminal extends React.Component {
           value={this.state.command}
           onChange={this.handleInput}
           onKeyPress={this.submitCommand}
+          onKeyDown={this.cycleCommands}
         />
       </div>
     );
