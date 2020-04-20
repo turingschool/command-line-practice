@@ -41,14 +41,16 @@ class Terminal extends React.Component {
 
   showPreviousOutput = () => {
     return this.state.previousOutput.map((pair, index) => {
-      return (
-        <div key={index}>
+      if (pair.command) {
+        return (
+          <div key={index}>
           <p className="mono">~
-            <span className="output">{pair.command}</span>
+          <span className="output">{pair.command}</span>
           </p>
           <p className="mono">{pair.output}</p>
-        </div>
-      )
+          </div>
+        )
+      }
     });
   }
 
@@ -72,7 +74,6 @@ class Terminal extends React.Component {
       this.setState({index: null});
     }
   }
-
 
   showNextCommand = (indexToCheck) => {
     if (this.state.previousOutput[indexToCheck + 1]) {
