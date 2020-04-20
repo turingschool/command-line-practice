@@ -3,6 +3,7 @@ import Nav from '../Nav';
 import Practice from '../Practice';
 import Intro from '../Intro';
 import Study from '../Study';
+import Welcome from '../Welcome';
 import './App.scss';
 import {
   BrowserRouter as Router,
@@ -253,6 +254,9 @@ class App extends React.Component {
         <div className="app">
           <Nav />
           <Switch>
+            <Route exact path="/">
+              <Welcome />
+            </Route>
             <Route path="/intro">
               <Intro />
             </Route>
