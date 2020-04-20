@@ -1,8 +1,15 @@
 import React from 'react';
 import Nav from '../Nav';
-import Terminal from '../Terminal';
-import Map from '../Map';
+import Practice from '../Practice';
+import Intro from '../Intro';
+import Study from '../Study';
+import Welcome from '../Welcome';
 import './App.scss';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+} from "react-router-dom";
 
 class App extends React.Component {
   constructor() {
@@ -243,16 +250,30 @@ class App extends React.Component {
 
   render() {
     return (
-      <div className="app">
-        <Nav />
-        <main>
-          <Terminal handleNewCommand={this.handleNewCommand}/>
-          <Map
-            mapData={this.state.mapData}
-            currentExplanation={this.state.currentExplanation}
-            directoryStructure={this.state.directoryStructure}  />
-        </main>
-      </div>
+      <Router>
+        <div className="app">
+          <Nav />
+          <Switch>
+            <Route exact path="/">
+              <Welcome />
+            </Route>
+            <Route path="/intro">
+              <Intro />
+            </Route>
+            <Route path="/study">
+              <Study />
+            </Route>
+            <Route path="/practice">
+              <Practice
+                handleNewCommand={this.handleNewCommand}
+                mapData={this.state.mapData}
+                currentExplanation={this.state.currentExplanation}
+                directoryStructure={this.state.directoryStructure}
+                />
+            </Route>
+          </Switch>
+        </div>
+      </Router>
     );
   }
 }
