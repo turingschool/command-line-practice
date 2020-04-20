@@ -1,6 +1,6 @@
 import React from 'react';
 import './Nav.scss';
-import {Link} from "react-router-dom";
+import {NavLink} from "react-router-dom";
 
 const Nav = () => {
   return (
@@ -8,13 +8,13 @@ const Nav = () => {
       <h1>Turing Terminal</h1>
         <ul className="nav-options">
           <li class="nav-link">
-            <Link to="/intro">Intro</Link>
+            <NavLink to="/intro" activeClassName="current-link">Intro</NavLink>
           </li>
           <li class="nav-link">
-            <Link to="/practice">Practice</Link>
+            <NavLink to="/practice" activeClassName="current-link">Practice</NavLink>
           </li>
           <li class="nav-link">
-            <Link to="/study">Study</Link>
+            <NavLink to="/study" activeClassName="current-link">Study</NavLink>
           </li>
         </ul>
     </nav>
