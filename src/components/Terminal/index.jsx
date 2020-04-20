@@ -53,15 +53,16 @@ class Terminal extends React.Component {
   }
 
   cycleCommands = (event) => {
+    const indexToCheck = this.state.index === null ? this.state.previousOutput.length : this.state.index;
+
     if (event.key === "ArrowUp") {
-      this.showPreviousCommand();
+      this.showPreviousCommand(indexToCheck);
     } else if (event.key === "ArrowDown") {
-      this.showNextCommand();
+      this.showNextCommand(indexToCheck);
     }
   }
 
-  showPreviousCommand = () => {
-    const indexToCheck = this.state.index === null ? this.state.previousOutput.length : this.state.index;
+  showPreviousCommand = (indexToCheck) => {
     if (this.state.previousOutput[indexToCheck - 1]) {
       this.setState({
         index: indexToCheck - 1,
@@ -73,8 +74,18 @@ class Terminal extends React.Component {
   }
 
 
-  showNextCommand = () => {
-
+  showNextCommand = (indexToCheck) => {
+    if (this.state.previousOutput[indexToCheck + 1]) {
+      this.setState({
+        index: indexToCheck + 1,
+        command: this.state.previousOutput[indexToCheck + 1].command
+      });
+    } else {
+      this.setState({
+        index: null,
+        command: ''
+      });
+    }
   }
 
   render() {
