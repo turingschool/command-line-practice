@@ -6,8 +6,9 @@ class Terminal extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      index: null,
       command: '',
-      previousOutput: []
+      previousOutput: [{command: '', output: ''}]
     }
   }
 
@@ -51,6 +52,31 @@ class Terminal extends React.Component {
     });
   }
 
+  cycleCommands = (event) => {
+    if (event.key === "ArrowUp") {
+      this.showPreviousCommand();
+    } else if (event.key === "ArrowDown") {
+      this.showNextCommand();
+    }
+  }
+
+  showPreviousCommand = () => {
+    const indexToCheck = this.state.index === null ? this.state.previousOutput.length : this.state.index;
+    if (this.state.previousOutput[indexToCheck - 1]) {
+      this.setState({
+        index: indexToCheck - 1,
+        command: this.state.previousOutput[indexToCheck - 1].command
+      });
+    } else {
+      this.setState({index: null});
+    }
+  }
+
+
+  showNextCommand = () => {
+
+  }
+
   render() {
     return (
       <div className="terminal-window">
@@ -68,6 +94,7 @@ class Terminal extends React.Component {
           value={this.state.command}
           onChange={this.handleInput}
           onKeyPress={this.submitCommand}
+          onKeyDown={this.cycleCommands}
         />
       </div>
     );
