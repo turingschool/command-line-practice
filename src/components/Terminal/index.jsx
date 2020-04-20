@@ -44,10 +44,10 @@ class Terminal extends React.Component {
       if (pair.command) {
         return (
           <div key={index}>
-          <p className="mono">~
-          <span className="output">{pair.command}</span>
-          </p>
-          <p className="mono">{pair.output}</p>
+            <p className="mono">~
+            <span className="output">{pair.command}</span>
+            </p>
+            <p className="mono">{pair.output}</p>
           </div>
         )
       }
@@ -68,7 +68,7 @@ class Terminal extends React.Component {
     if (this.state.previousOutput[indexToCheck - 1]) {
       this.setState({
         index: indexToCheck - 1,
-        command: this.state.previousOutput[indexToCheck - 1].command
+        command: this.state.previousOutput[indexToCheck - 1].command,
       });
     } else {
       this.setState({index: null});
@@ -79,12 +79,12 @@ class Terminal extends React.Component {
     if (this.state.previousOutput[indexToCheck + 1]) {
       this.setState({
         index: indexToCheck + 1,
-        command: this.state.previousOutput[indexToCheck + 1].command
+        command: this.state.previousOutput[indexToCheck + 1].command,
       });
     } else {
       this.setState({
         index: null,
-        command: ''
+        command: '',
       });
     }
   }
