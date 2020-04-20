@@ -1,5 +1,5 @@
 import React from 'react';
-import './FileViz.scss';
+import './Visualization.scss';
 import fileImg from './assets/file.png';
 import dirImg from './assets/dir.svg';
 
