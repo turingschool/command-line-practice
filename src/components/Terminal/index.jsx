@@ -33,9 +33,7 @@ class Terminal extends React.Component {
 
   showWelcomeMessage = () => {
     return (
-      <p className="mono welcome">~
-        <span className="output">Welcome! Type in any command...</span>
-      </p>
+      <p className="mono welcome">Welcome! Type in any command...</p>
     );
   }
 
@@ -44,7 +42,7 @@ class Terminal extends React.Component {
       if (pair.command) {
         return (
           <div key={index}>
-            <p className="mono">~
+            <p className="mono">$
             <span className="output">{pair.command}</span>
             </p>
             <p className="mono">{pair.output}</p>
@@ -98,7 +96,7 @@ class Terminal extends React.Component {
           className="command-prompt mono"
           htmlFor="command-input"
         >
-          ~
+          $
         </label>
         <input
           id="command-input"
