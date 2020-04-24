@@ -7,13 +7,13 @@ const Nav = () => {
     <nav>
       <h1>Turing Terminal</h1>
         <ul className="nav-options">
-          <li class="nav-link">
-            <NavLink to="/intro" activeClassName="current-link">Intro</NavLink>
+          <li className="nav-link">
+            <NavLink to="/intro" activeClassName="current-link">Learn</NavLink>
           </li>
-          <li class="nav-link">
+          <li className="nav-link">
             <NavLink to="/practice" activeClassName="current-link">Practice</NavLink>
           </li>
-          <li class="nav-link">
+          <li className="nav-link">
             <NavLink to="/study" activeClassName="current-link">Study</NavLink>
           </li>
         </ul>

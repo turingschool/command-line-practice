@@ -1,7 +1,7 @@
 import React from 'react';
 import Nav from '../Nav';
 import Practice from '../Practice';
-import Intro from '../Intro';
+import Learn from '../Learn';
 import Study from '../Study';
 import Welcome from '../Welcome';
 import './App.scss';
@@ -258,7 +258,7 @@ class App extends React.Component {
               <Welcome />
             </Route>
             <Route path="/intro">
-              <Intro />
+              <Learn />
             </Route>
             <Route path="/study">
               <Study />

@@ -1,0 +1,41 @@
+.command-card {
+  border: 1px solid black;
+  border-radius: 3px;
+  padding: 10px 30px;
+  margin-bottom: 10px;
+
+  h2 {
+    margin: 5px;
+    font-family: 'Anonymous Pro', monospace;
+  }
+}
+
+.command-card-header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.command-card-content {
+  // display: none;
+}
+
+.command-card-example {
+  background-color: #20232a;
+  color: #fff;
+  border-radius: 3px;
+  padding: 1em;
+  font-family: 'Anonymous Pro', monospace;
+  width: 50%;
+
+  p {
+    margin: 0;
+  }
+}
+
+.how-code {
+
+}
+
+.how-text {
+
+}
