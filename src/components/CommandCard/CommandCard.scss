@@ -23,11 +23,14 @@
 
 .command-card-content {
   padding: 5px 30px 10px;
+  // animation: expand 7s ease;
 }
 
 .hide {
   display: none;
+  // animation: collapse 2s infinite;
 }
+
 .command-card-example {
   background-color: #20232a;
   color: #fff;
