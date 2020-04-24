@@ -1,7 +1,7 @@
 .command-card {
   border: 1px solid black;
   border-radius: 3px;
-  padding: 10px 30px;
+  // padding: 10px 30px;
   margin-bottom: 10px;
 
   h2 {
@@ -13,10 +13,22 @@
 .command-card-header {
   display: flex;
   justify-content: space-between;
+  cursor: pointer;
+  padding: 10px 30px 10px;
+}
+
+.command-card-header:hover {
+  background-color: #F1F1F1;
 }
 
 .command-card-content {
-  // display: none;
+  padding: 5px 30px 10px;
+  // animation: expand 7s ease;
+}
+
+.hide {
+  display: none;
+  // animation: collapse 2s infinite;
 }
 
 .command-card-example {

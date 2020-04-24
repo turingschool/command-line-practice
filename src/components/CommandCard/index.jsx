@@ -1,7 +1,8 @@
-import React from 'react';
+import React, {useState} from 'react';
 import './CommandCard.scss';
 
 const CommandCard = ({command}) => {
+  const [isExpanded, setIsExpanded] = useState(false);
 
   const displayCommandSnippets = (code) => {
     return code.map(code => {
@@ -28,20 +29,27 @@ const CommandCard = ({command}) => {
     });
   }
 
+  const toggleExpand = () => {
+    setIsExpanded(!isExpanded);
+  }
+
   return (
     <section className="command-card">
-      <div className="command-card-header">
+      <div
+        className="command-card-header"
+        onClick={toggleExpand}
+      >
         <h2>{command.commandName}</h2>
         <h2>^</h2>
       </div>
-      <div className="command-card-content">
+      <div className={isExpanded ? "command-card-content" : "hide"}>
         <h3>Why would I use this command?</h3>
         <p>{command.why1}</p>
         <p>{command.why2}</p>
         <h3>How do I use this command?</h3>
         <div>{displayExplanations(command.how)}</div>
         <h3>What are the common mistakes made with this command?</h3>
-        <p>{displayExplanations(command.mistakes)}</p>
+        <div>{displayExplanations(command.mistakes)}</div>
       </div>
     </section>
   );
