@@ -18,7 +18,12 @@ const CommandCard = ({command}) => {
       if (part.text) {
         return <p className="how-text">{part.text}</p>
       } else {
-        return <div className="command-card-example">{displayCommandSnippets(part.code)}</div>
+        return (
+          <div className="command-card-example">
+            {displayCommandSnippets(part.code)}
+            <p className="how-code">$ </p>
+          </div>
+        );
       }
     });
   }
