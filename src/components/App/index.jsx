@@ -173,7 +173,7 @@ class App extends React.Component {
 
     if (descendants[dir] === null) {
       result = `rmdir: ${dir}: Not a directory`
-      return;
+      return result;
     }
 
     if (descendantList.includes(dir)) {
