@@ -118,7 +118,7 @@ class App extends React.Component {
     const directDescendants = this.findDirectDescendants(this.state.pathToCurrentLocation);
 
     filesToMake.forEach(title => {
-      directDescendants[title] = '';
+      directDescendants[title] = null;
       this.updateMapData(title, 'file');
     });
   }
