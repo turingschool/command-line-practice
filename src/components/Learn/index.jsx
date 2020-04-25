@@ -12,16 +12,16 @@ const Learn = () => {
           key={index}
           command={command}
         />
-      )
+      );
     });
   }
 
   return (
     <main className="learn-main">
       <h2>Learn</h2>
-      <h3>What is the Command Line?</h3>
+      <h3>What is the command line?</h3>
       <p>A <strong>command line</strong> is a low-level interface to your computer. Instead of pointing and clicking on things in the finder, we can type text into a command line to interact with the contents of your computer.</p>
-      <h3>What is the Terminal and why do we need it?</h3>
+      <h3>What is the terminal and why do we need it?</h3>
       <p>A <strong>terminal</strong> is a program on your computer that lets you interact with the command line - it’s the application you’ll actually type commands into! On your mac, you might use the Terminal or iTerm applications. In this tutorial, we will use a small version of those applications that is built into this site.</p>
       <p>The terminal allows developers to navigate the directories on their computer quickly. When you start off, it may feel like clicking around in the finder is faster than remembering which command to use when, etc. But once you learn and practice them, you’ll notice how much your time is maximized! Additionally, some of the tools you will use as a developer can only be accessed through the terminal.</p>
       <h3>Terminology</h3>
