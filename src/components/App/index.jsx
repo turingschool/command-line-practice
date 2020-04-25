@@ -118,7 +118,7 @@ class App extends React.Component {
     const directDescendants = this.findDirectDescendants(this.state.pathToCurrentLocation);
 
     filesToMake.forEach(title => {
-      directDescendants[title] = '';
+      directDescendants[title] = null;
       this.updateMapData(title, 'file');
     });
   }
@@ -137,7 +137,6 @@ class App extends React.Component {
     commandArgs.forEach(item => {
       path.push(item);
       const pathToDelete = this.findDirectDescendants(path);
-
       if (command === 'rm') {
         result = this.rmCommand(descendants, descendantList, item, path);
       } else if (command === 'rmdir') {
@@ -151,11 +150,12 @@ class App extends React.Component {
   }
 
   rmCommand = (descendants, descendantList, file, path) => {
+    debugger;
     let result = null;
 
     if (descendants[file] !== null) {
       result = `rm: ${file}: is a directory`
-      return;
+      return result;
     }
 
     if (descendantList.includes(file)) {
@@ -173,7 +173,7 @@ class App extends React.Component {
 
     if (descendants[dir] === null) {
       result = `rmdir: ${dir}: Not a directory`
-      return;
+      return result;
     }
 
     if (descendantList.includes(dir)) {
