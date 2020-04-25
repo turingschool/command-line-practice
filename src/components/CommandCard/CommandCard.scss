@@ -13,8 +13,19 @@
 .command-card-header {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   cursor: pointer;
   padding: 10px 30px 10px;
+}
+
+.expanded {
+  height: 20px;
+  transform: rotate(270deg);
+}
+
+.collapsed {
+  height: 20px;
+  transform: rotate(0deg);
 }
 
 .command-card-header:hover {
