@@ -1,12 +1,22 @@
 .command-card {
   border: 1px solid black;
   border-radius: 3px;
-  // padding: 10px 30px;
   margin-bottom: 10px;
 
   h2 {
     margin: 5px;
+    font-size: 160%;
     font-family: 'Anonymous Pro', monospace;
+  }
+
+  h3 {
+    font-size: 140%;
+    margin: 0.75em 0;
+  }
+
+  p {
+    font-size: 120%;
+    margin: 0.5em 0;
   }
 }
 
@@ -33,13 +43,11 @@
 }
 
 .command-card-content {
-  padding: 5px 30px 10px;
-  // animation: expand 7s ease;
+  padding: 5px 30px 25px;
 }
 
 .hide {
   display: none;
-  // animation: collapse 2s infinite;
 }
 
 .command-card-example {
@@ -56,7 +64,7 @@
 }
 
 .how-code {
-
+  font-size: 125%;
 }
 
 .how-text {
