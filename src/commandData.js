@@ -1,7 +1,7 @@
 const commandData = [
   {
     commandName: "pwd",
-    why1: "When you want to ask the question, \"Where am I in the directory stucture?\", pwd will help answer that question. When you run this command, it will provide output informing you of the file path of your current working directory.",
+    why1: "When you wonder, \"where am I in the directory stucture?\", pwd will help answer that question. When you run this command, it will provide output informing you of the file path of your current working directory.",
     why2: "pwd can be run at any time and is solely informative, so it won’t do anything besides give you some information! As we learn more about other commands available to us, the importance of this one will be illustrated more and more.",
     how: [
       {text: "Type pwd, then hit return!"},
@@ -15,7 +15,7 @@ const commandData = [
     why1: "If you are wondering what contents are inside of your current working directory, ls will help you out! ls is short for list. When you run this command, name of every file or directory that lives directly inside of your current working directory will be printed out.",
     why2: "ls can be run at any time and is solely informative, so it won’t “do” anything besides give you some information! It’s a great tool to double check that the contents inside of your current directory are actually what you think they are.",
     how: [
-      {text: "Type la, then hit return!"},
+      {text: "Type ls, then hit return!"},
       {code: [{command: "ls"}, {output: "personal  projects  classwork"}]},
       {text: "Providing arguments, or additional information, to the ls command is optional. As a beginner, you usually don’t need to pass any arguments to ls. There are some advanced things ls can do with specific arguments. You can read more about it here (link a good resource)."}
     ],

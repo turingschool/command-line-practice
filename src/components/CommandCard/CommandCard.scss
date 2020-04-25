@@ -1,38 +1,62 @@
 .command-card {
-  border: 1px solid black;
+  border: 1px solid #FFA2FF;
   border-radius: 3px;
-  // padding: 10px 30px;
   margin-bottom: 10px;
+  color: #20232a;
 
   h2 {
     margin: 5px;
+    font-size: 160%;
     font-family: 'Anonymous Pro', monospace;
+  }
+
+  h3 {
+    font-size: 140%;
+    margin: 0.75em 0;
+  }
+
+  p {
+    font-size: 120%;
+    margin: 0.5em 0;
   }
 }
 
 .command-card-header {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   cursor: pointer;
   padding: 10px 30px 10px;
+  background-color: #FFF1FF;
+  transition: 1s ease;
+}
+
+.expanded {
+  height: 20px;
+  transform: rotate(270deg);
+}
+
+.collapsed {
+  height: 20px;
+  transform: rotate(0deg);
 }
 
 .command-card-header:hover {
-  background-color: #F1F1F1;
+  background-color: #FFE1FF;
+  transition: 1s ease;
 }
 
 .command-card-content {
-  padding: 5px 30px 10px;
-  // animation: expand 7s ease;
+  padding: 5px 30px 25px;
+  background-color: #FFFBFF;
 }
 
 .hide {
   display: none;
-  // animation: collapse 2s infinite;
 }
 
 .command-card-example {
-  background-color: #20232a;
+  background-color: #27292E;
   color: #fff;
   border-radius: 3px;
   padding: 1em;
@@ -45,7 +69,7 @@
 }
 
 .how-code {
-
+  font-size: 125%;
 }
 
 .how-text {

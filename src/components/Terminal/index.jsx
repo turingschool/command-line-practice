@@ -105,6 +105,7 @@ class Terminal extends React.Component {
           onChange={this.handleInput}
           onKeyPress={this.submitCommand}
           onKeyDown={this.cycleCommands}
+          autcomplete="off"
         />
       </div>
     );

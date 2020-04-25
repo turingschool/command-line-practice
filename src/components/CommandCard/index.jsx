@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import './CommandCard.scss';
+import arrow from './assets/arrow.svg';
 
 const CommandCard = ({command}) => {
   const [isExpanded, setIsExpanded] = useState(false);
@@ -40,7 +41,7 @@ const CommandCard = ({command}) => {
         onClick={toggleExpand}
       >
         <h2>{command.commandName}</h2>
-        <h2>^</h2>
+        <img className={isExpanded ? "expanded" : "collapsed"} alt="expand collapse icon" src={arrow}/>
       </div>
       <div className={isExpanded ? "command-card-content" : "hide"}>
         <h3>Why would I use this command?</h3>
