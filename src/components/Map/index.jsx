@@ -2,7 +2,7 @@ import React from 'react';
 import './Map.scss';
 import Visualization from '../Visualization';
 
-const Map = ({currentExplanation, directoryStructure, mapData}) => {
+const Map = ({currentExplanation, mapData}) => {
 
   const displayMapData = () => {
     return mapData.map((item, index) => {
@@ -12,6 +12,7 @@ const Map = ({currentExplanation, directoryStructure, mapData}) => {
           title={item.title}
           type={item.type}
           levelFromRoot={item.levelFromRoot}
+          currentDir={false}
         />
       );
     });
@@ -21,7 +22,7 @@ const Map = ({currentExplanation, directoryStructure, mapData}) => {
     <section className="map-container">
       <p>{currentExplanation}</p>
       <div className="visualizations">
-        <Visualization title="root" type="dir" levelFromRoot="0" />
+        <Visualization currentDir={true} title="root" type="dir" levelFromRoot="0" />
         {displayMapData()}
       </div>
     </section>
