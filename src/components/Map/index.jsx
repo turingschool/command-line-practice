@@ -2,17 +2,19 @@ import React from 'react';
 import './Map.scss';
 import Visualization from '../Visualization';
 
-const Map = ({currentExplanation, mapData}) => {
+const Map = ({currentExplanation, mapData, currentPath}) => {
 
   const displayMapData = () => {
     return mapData.map((item, index) => {
+      const current = item.current;
+      
       return (
         <Visualization
           key={index}
           title={item.title}
           type={item.type}
           levelFromRoot={item.levelFromRoot}
-          currentDir={false}
+          currentDir={current}
         />
       );
     });
