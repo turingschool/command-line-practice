@@ -4,7 +4,7 @@ import Map from '../Map';
 
 import './Practice.scss';
 
-const Practice = ({handleNewCommand, mapData, currentExplanation, directoryStructure}) => {
+const Practice = ({handleNewCommand, mapData, currentExplanation, directoryStructure, currentPath}) => {
   return (
     <main>
       <Terminal handleNewCommand={handleNewCommand}/>
@@ -12,6 +12,7 @@ const Practice = ({handleNewCommand, mapData, currentExplanation, directoryStruc
         mapData={mapData}
         currentExplanation={currentExplanation}
         directoryStructure={directoryStructure}
+        currentPath={currentPath}
       />
     </main>
   );
