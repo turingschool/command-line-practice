@@ -21,13 +21,14 @@ class App extends React.Component {
         },
         "bills.txt": null
       },
+      currentLevel: 0,
       pathToCurrentLocation: [],
       currentCommand: [],
       currentExplanation: '',
       mapData: [
-        {title: "turing", type: "dir", levelFromRoot: 1},
-        {title: "classwork", type: "dir", levelFromRoot: 2},
-        {title: "bills.txt", type: "file", levelFromRoot: 1},
+        {title: "turing", type: "dir", levelFromRoot: 1, current: false},
+        {title: "classwork", type: "dir", levelFromRoot: 2, current: false},
+        {title: "bills.txt", type: "file", levelFromRoot: 1, current: false},
       ]
     }
 
@@ -36,7 +37,7 @@ class App extends React.Component {
   updateMapData = (title, type) => {
     const path = this.state.pathToCurrentLocation;
     const levelFromRoot = path.length + 1;
-    const newItem = {title, type, levelFromRoot};
+    const newItem = {title, type, levelFromRoot, current: false};
 
     if (levelFromRoot === 1) {
       this.setState(state => {
