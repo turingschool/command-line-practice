@@ -69,7 +69,8 @@ class App extends React.Component {
   cdCommand = (path) => {
 
     if (!path.length) {
-      this.setState({pathToCurrentLocation: []});
+      //for each element in mapData, set.current to false
+      this.setState({pathToCurrentLocation: [], currentLevel: 0});
     } else {
       const desiredPath = path[0].split('/');
 
@@ -84,17 +85,44 @@ class App extends React.Component {
   moveToValidDirectory = (desiredPath) => {
     desiredPath.forEach((el, index) => {
       if (el === '..' || el === '') {
+        this.setState(state => {
+          return {
+            currentLevel: state.currentLevel - 1,
+          }
+        });
         this.state.pathToCurrentLocation.pop();
       } else {
         if (this.validRelationship(desiredPath[index])) {
           this.setState(state => {
             return {
-              pathToCurrentLocation: [...state.pathToCurrentLocation, el]
+              pathToCurrentLocation: [...state.pathToCurrentLocation, el],
+              currentLevel: state.currentLevel + 1,
             }
           });
         }
       }
+
+      this.updateCurrentWorkingDir(desiredPath)
+      // console.log("we are in a valid CD situation!", el, this.state.pathToCurrentLocation.concat(desiredPath));
+      // console.log("mapdata:", this.state.mapData);
+      // console.log(this.state.pathToCurrentLocation, this.state.pathToCurrentLocation.length);
     });
+  }
+
+  updateCurrentWorkingDir = (path) => {
+    const pathToCurrent = this.state.pathToCurrentLocation.concat(path);
+
+    const updatedMapData = this.state.mapData.map((item, i) => {
+      if (item.type === 'dir' && item.levelFromRoot === this.state.currentLevel + 1 && item.title === pathToCurrent[pathToCurrent.length - 1]) {
+        item.current = true;
+        return item;
+      } else {
+        return item;
+      }
+    });
+
+    this.setState({mapData: updatedMapData});
+
   }
 
   mkdirCommand = (directoriesToMake) => {
@@ -270,6 +298,7 @@ class App extends React.Component {
                 mapData={this.state.mapData}
                 currentExplanation={this.state.currentExplanation}
                 directoryStructure={this.state.directoryStructure}
+                currentPath={this.state.pathToCurrentLocation}
                 />
             </Route>
           </Switch>
