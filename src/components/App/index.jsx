@@ -71,8 +71,9 @@ class App extends React.Component {
     if (!path.length) {
       //for each element in mapData, set.current to false
       this.setState({pathToCurrentLocation: [], currentLevel: 0});
+      this.updateCurrentWorkingDir([], 0);
     } else {
-      const desiredPath = path[0].split('/');
+      const desiredPath = path[0].split('/') || [];
 
       if (desiredPath.includes('..') || this.validRelationship(desiredPath[0])) {
         this.moveToValidDirectory(desiredPath);
@@ -85,40 +86,47 @@ class App extends React.Component {
   moveToValidDirectory = (desiredPath) => {
     desiredPath.forEach((el, index) => {
       if (el === '..' || el === '') {
-        this.setState(state => {
-          return {
-            currentLevel: state.currentLevel - 1,
-          }
-        });
+        this.state.currentLevel -= 1;
+        // this.setState(state => {
+        //   return {
+        //     currentLevel: state.currentLevel - 1,
+        // ^^ this wasn't setting state in time to update mapData??
+        //   }
+        // });
         this.state.pathToCurrentLocation.pop();
+        this.updateCurrentWorkingDir([], -1);
       } else {
         if (this.validRelationship(desiredPath[index])) {
-          this.setState(state => {
-            return {
-              pathToCurrentLocation: [...state.pathToCurrentLocation, el],
-              currentLevel: state.currentLevel + 1,
-            }
-          });
+          this.state.pathToCurrentLocation.push(el);
+          this.state.currentLevel += 1;
+          // this.setState(state => {
+          //   return {
+          //     // pathToCurrentLocation: [...state.pathToCurrentLocation, el],
+          //     // ^^this was not pushing BOTH elements on if user ran for example cd turing/classwork
+          //     // currentLevel: state.currentLevel + desiredPath.length,
+          //     //^^ this was creating a bug with inconsistent jumps in currentlevel??
+          //   }
+          // });
+          this.updateCurrentWorkingDir(desiredPath, desiredPath.length);
         }
       }
-
-      this.updateCurrentWorkingDir(desiredPath)
-      // console.log("we are in a valid CD situation!", el, this.state.pathToCurrentLocation.concat(desiredPath));
-      // console.log("mapdata:", this.state.mapData);
-      // console.log(this.state.pathToCurrentLocation, this.state.pathToCurrentLocation.length);
     });
   }
 
-  updateCurrentWorkingDir = (path) => {
+  updateCurrentWorkingDir = (path, change) => {
     const pathToCurrent = this.state.pathToCurrentLocation.concat(path);
 
     const updatedMapData = this.state.mapData.map((item, i) => {
-      if (item.type === 'dir' && item.levelFromRoot === this.state.currentLevel + 1 && item.title === pathToCurrent[pathToCurrent.length - 1]) {
+      const correctTitle = item.title === pathToCurrent[pathToCurrent.length - 1];
+      const correctLevel = item.levelFromRoot === this.state.currentLevel;
+
+      if (item.type === 'dir' && correctTitle && correctLevel) {
         item.current = true;
-        return item;
       } else {
-        return item;
+        item.current = false;
       }
+      
+      return item;
     });
 
     this.setState({mapData: updatedMapData});
