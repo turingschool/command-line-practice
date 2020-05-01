@@ -311,6 +311,9 @@ class App extends React.Component {
                 />
             </Route>
           </Switch>
+          <footer>
+            <p className="made-with">Made with ❤️ in Denver</p>
+          </footer>
         </div>
       </Router>
     );
