@@ -26,6 +26,7 @@ class App extends React.Component {
       currentCommand: [],
       currentExplanation: '',
       mapData: [
+        {title: "root", type: "dir", levelFromRoot: 0, current: true},
         {title: "turing", type: "dir", levelFromRoot: 1, current: false},
         {title: "classwork", type: "dir", levelFromRoot: 2, current: false},
         {title: "bills.txt", type: "file", levelFromRoot: 1, current: false},
@@ -69,7 +70,6 @@ class App extends React.Component {
   cdCommand = (path) => {
 
     if (!path.length) {
-      //for each element in mapData, set.current to false
       this.setState({pathToCurrentLocation: [], currentLevel: 0});
       this.updateCurrentWorkingDir([], 0);
     } else {
@@ -86,37 +86,26 @@ class App extends React.Component {
   moveToValidDirectory = (desiredPath) => {
     desiredPath.forEach((el, index) => {
       if (el === '..' || el === '') {
-        this.state.currentLevel -= 1;
-        // this.setState(state => {
-        //   return {
-        //     currentLevel: state.currentLevel - 1,
-        // ^^ this wasn't setting state in time to update mapData??
-        //   }
-        // });
+        this.setState(state => {
+          return {
+            currentLevel: state.currentLevel - 1,
+          }
+        });
         this.state.pathToCurrentLocation.pop();
         this.updateCurrentWorkingDir([], -1);
       } else {
         if (this.validRelationship(desiredPath[index])) {
           this.state.pathToCurrentLocation.push(el);
           this.state.currentLevel += 1;
-          // this.setState(state => {
-          //   return {
-          //     // pathToCurrentLocation: [...state.pathToCurrentLocation, el],
-          //     // ^^this was not pushing BOTH elements on if user ran for example cd turing/classwork
-          //     // currentLevel: state.currentLevel + desiredPath.length,
-          //     //^^ this was creating a bug with inconsistent jumps in currentlevel??
-          //   }
-          // });
-          this.updateCurrentWorkingDir(desiredPath, desiredPath.length);
         }
       }
     });
   }
 
-  updateCurrentWorkingDir = (path, change) => {
-    const pathToCurrent = this.state.pathToCurrentLocation.concat(path);
+  updateCurrentWorkingDir = () => {
+    const pathToCurrent = this.state.pathToCurrentLocation;
 
-    const updatedMapData = this.state.mapData.map((item, i) => {
+    const updatedMap = this.state.mapData.map((item, i) => {
       const correctTitle = item.title === pathToCurrent[pathToCurrent.length - 1];
       const correctLevel = item.levelFromRoot === this.state.currentLevel;
 
@@ -125,12 +114,15 @@ class App extends React.Component {
       } else {
         item.current = false;
       }
-      
+
       return item;
     });
 
-    this.setState({mapData: updatedMapData});
+    if (updatedMap.every(item => !item.current)) {
+      updatedMap[0].current = true;
+    }
 
+    return updatedMap;
   }
 
   mkdirCommand = (directoriesToMake) => {
@@ -286,6 +278,8 @@ class App extends React.Component {
   }
 
   render() {
+    const mapData = this.updateCurrentWorkingDir()
+
     return (
       <Router>
         <div className="app">
@@ -303,7 +297,7 @@ class App extends React.Component {
             <Route path="/practice">
               <Practice
                 handleNewCommand={this.handleNewCommand}
-                mapData={this.state.mapData}
+                mapData={mapData}
                 currentExplanation={this.state.currentExplanation}
                 directoryStructure={this.state.directoryStructure}
                 currentPath={this.state.pathToCurrentLocation}
