@@ -1,6 +1,9 @@
 .practice-main {
   display: flex;
   flex-direction: column;
+  h2 {
+    font-size: 160%;
+  }
 }
 
 .how-to-practice-section {

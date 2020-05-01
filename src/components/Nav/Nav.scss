@@ -4,6 +4,14 @@ nav {
   justify-content: space-between;
   padding-left: 1em;
   padding-right: 1em;
+
+  a, a:active {
+    color: #20232a;
+    text-decoration: none;
+    font-weight: 600;
+    letter-spacing: 0.75px;
+    font-size: 115%;
+  }
 }
 
 .nav-options {
@@ -16,12 +24,14 @@ nav {
 .nav-link {
   list-style-type: none;
   font-size: 120%;
-  a {
-    color: black;
-    text-decoration: none;
-  }
 }
 
 .current-link {
-  border-bottom: 2px solid black;
+  border-bottom: 3px solid;
+  border-image-slice: 1;
+  border-width: 3px;
+  border-image-source: linear-gradient(270deg, #45F0F0 0%, #FED738 40%, #FD68FD 70%);
+  background: linear-gradient(270deg, #45F0F0 0%, #FED738 40%, #FD68FD 70%);
+ -webkit-background-clip: text;
+ -webkit-text-fill-color: transparent;
 }
