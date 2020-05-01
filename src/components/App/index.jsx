@@ -45,8 +45,10 @@ class App extends React.Component {
         return { mapData: [...state.mapData, newItem] }
       });
     } else {
+      console.log("in other!!!");
       this.state.mapData.forEach((el, index) => {
         if (el.title === path[path.length -1]) {
+          console.log("in side of IF");
           this.state.mapData.splice(index + 1, 0, newItem);
         }
       });
@@ -179,7 +181,6 @@ class App extends React.Component {
   }
 
   rmCommand = (descendants, descendantList, file, path) => {
-    debugger;
     let result = null;
 
     if (descendants[file] !== null) {
@@ -220,11 +221,16 @@ class App extends React.Component {
   }
 
   removeItemFromMapData = (path, type) => {
+    const newMapData = [];
+
     this.state.mapData.forEach((el, index, mapData) => {
-      if (el.levelFromRoot === path.length && type === el.type) {
-        mapData.splice(index, 1);
+      if (el.levelFromRoot === path.length && type === el.type && el.title === path[path.length - 1]) {
+      } else {
+        newMapData.push(el);
       }
     });
+
+    this.setState({mapData: newMapData});
   }
 
   handleNewCommand = (command) => {
@@ -267,6 +273,7 @@ class App extends React.Component {
         return this.removeCommands(commandArgs, 'rm');
         break;
       case 'rmdir':
+      console.log("in RMDIR");
         return this.removeCommands(commandArgs, 'rmdir');
         break;
       default:
