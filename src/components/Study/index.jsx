@@ -3,9 +3,11 @@ import './Study.scss';
 
 const Study = () => {
   return (
-    <div>
-      <h1>Study Time</h1>
-    </div>
+    <main className="study-main">
+      <h2>Study Time</h2>
+      <p>Under construction! Come back soon for some study games!</p>
+      <p className="construction">👷🏼‍♀️  🚧</p>
+    </main>
   );
 }
 
