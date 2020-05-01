@@ -5,9 +5,18 @@ import Map from '../Map';
 import './Practice.scss';
 
 const Practice = ({handleNewCommand, mapData, currentExplanation, directoryStructure, currentPath}) => {
-  const [isReturnVisitor, setVisitorStatus] = useState(false);
+  let isReturning;
+  if (localStorage.getItem('isReturning') === 'true') {
+    isReturning = true;
+  } else {
+    isReturning = false;
+  }
+
+  const [isReturnVisitor, setVisitorStatus] = useState(isReturning);
 
   const changeVisitorStatus = () => {
+    isReturnVisitor ? localStorage.setItem('isReturning', 'false') :localStorage.setItem('isReturning', 'true');
+
     setVisitorStatus(!isReturnVisitor);
   }
 
@@ -24,7 +33,7 @@ const Practice = ({handleNewCommand, mapData, currentExplanation, directoryStruc
 
   const displayReturnVisitorView = () => {
     return (
-      <div class="practice-started">
+      <div className="practice-started">
         <div className="terminal-map-container">
           <Terminal handleNewCommand={handleNewCommand}/>
           <Map
@@ -33,7 +42,7 @@ const Practice = ({handleNewCommand, mapData, currentExplanation, directoryStruc
           directoryStructure={directoryStructure}
           />
         </div>
-        <button class="show-directions-btn" onClick={changeVisitorStatus}>⬅ Show me the directions again</button>
+        <button className="show-directions-btn" onClick={changeVisitorStatus}>⬅ Show me the directions again</button>
       </div>
     );
   }
