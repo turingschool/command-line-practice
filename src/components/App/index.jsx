@@ -21,13 +21,15 @@ class App extends React.Component {
         },
         "bills.txt": null
       },
+      currentLevel: 0,
       pathToCurrentLocation: [],
       currentCommand: [],
       currentExplanation: '',
       mapData: [
-        {title: "turing", type: "dir", levelFromRoot: 1},
-        {title: "classwork", type: "dir", levelFromRoot: 2},
-        {title: "bills.txt", type: "file", levelFromRoot: 1},
+        {title: "root", type: "dir", levelFromRoot: 0, current: true},
+        {title: "turing", type: "dir", levelFromRoot: 1, current: false},
+        {title: "classwork", type: "dir", levelFromRoot: 2, current: false},
+        {title: "bills.txt", type: "file", levelFromRoot: 1, current: false},
       ]
     }
 
@@ -36,15 +38,17 @@ class App extends React.Component {
   updateMapData = (title, type) => {
     const path = this.state.pathToCurrentLocation;
     const levelFromRoot = path.length + 1;
-    const newItem = {title, type, levelFromRoot};
+    const newItem = {title, type, levelFromRoot, current: false};
 
     if (levelFromRoot === 1) {
       this.setState(state => {
         return { mapData: [...state.mapData, newItem] }
       });
     } else {
+      console.log("in other!!!");
       this.state.mapData.forEach((el, index) => {
         if (el.title === path[path.length -1]) {
+          console.log("in side of IF");
           this.state.mapData.splice(index + 1, 0, newItem);
         }
       });
@@ -68,9 +72,10 @@ class App extends React.Component {
   cdCommand = (path) => {
 
     if (!path.length) {
-      this.setState({pathToCurrentLocation: []});
+      this.setState({pathToCurrentLocation: [], currentLevel: 0});
+      this.updateCurrentWorkingDir([], 0);
     } else {
-      const desiredPath = path[0].split('/');
+      const desiredPath = path[0].split('/') || [];
 
       if (desiredPath.includes('..') || this.validRelationship(desiredPath[0])) {
         this.moveToValidDirectory(desiredPath);
@@ -83,17 +88,43 @@ class App extends React.Component {
   moveToValidDirectory = (desiredPath) => {
     desiredPath.forEach((el, index) => {
       if (el === '..' || el === '') {
+        this.setState(state => {
+          return {
+            currentLevel: state.currentLevel - 1,
+          }
+        });
         this.state.pathToCurrentLocation.pop();
+        this.updateCurrentWorkingDir([], -1);
       } else {
         if (this.validRelationship(desiredPath[index])) {
-          this.setState(state => {
-            return {
-              pathToCurrentLocation: [...state.pathToCurrentLocation, el]
-            }
-          });
+          this.state.pathToCurrentLocation.push(el);
+          this.state.currentLevel += 1;
         }
       }
     });
+  }
+
+  updateCurrentWorkingDir = () => {
+    const pathToCurrent = this.state.pathToCurrentLocation;
+
+    const updatedMap = this.state.mapData.map((item, i) => {
+      const correctTitle = item.title === pathToCurrent[pathToCurrent.length - 1];
+      const correctLevel = item.levelFromRoot === this.state.currentLevel;
+
+      if (item.type === 'dir' && correctTitle && correctLevel) {
+        item.current = true;
+      } else {
+        item.current = false;
+      }
+
+      return item;
+    });
+
+    if (updatedMap.every(item => !item.current)) {
+      updatedMap[0].current = true;
+    }
+
+    return updatedMap;
   }
 
   mkdirCommand = (directoriesToMake) => {
@@ -150,7 +181,6 @@ class App extends React.Component {
   }
 
   rmCommand = (descendants, descendantList, file, path) => {
-    debugger;
     let result = null;
 
     if (descendants[file] !== null) {
@@ -191,11 +221,16 @@ class App extends React.Component {
   }
 
   removeItemFromMapData = (path, type) => {
+    const newMapData = [];
+
     this.state.mapData.forEach((el, index, mapData) => {
-      if (el.levelFromRoot === path.length && type === el.type) {
-        mapData.splice(index, 1);
+      if (el.levelFromRoot === path.length && type === el.type && el.title === path[path.length - 1]) {
+      } else {
+        newMapData.push(el);
       }
     });
+
+    this.setState({mapData: newMapData});
   }
 
   handleNewCommand = (command) => {
@@ -238,6 +273,7 @@ class App extends React.Component {
         return this.removeCommands(commandArgs, 'rm');
         break;
       case 'rmdir':
+      console.log("in RMDIR");
         return this.removeCommands(commandArgs, 'rmdir');
         break;
       default:
@@ -249,6 +285,8 @@ class App extends React.Component {
   }
 
   render() {
+    const mapData = this.updateCurrentWorkingDir()
+
     return (
       <Router>
         <div className="app">
@@ -266,9 +304,10 @@ class App extends React.Component {
             <Route path="/practice">
               <Practice
                 handleNewCommand={this.handleNewCommand}
-                mapData={this.state.mapData}
+                mapData={mapData}
                 currentExplanation={this.state.currentExplanation}
                 directoryStructure={this.state.directoryStructure}
+                currentPath={this.state.pathToCurrentLocation}
                 />
             </Route>
           </Switch>
