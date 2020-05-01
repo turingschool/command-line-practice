@@ -3,12 +3,46 @@
   flex-direction: column;
 }
 
+.how-to-practice-section {
+  width: 65%;
+  margin: 0 auto;
+}
+
 .how-to-practice {
-  width: 61%;
   margin-top: 0;
   font-size: 120%;
 }
 
+.start-btn {
+  background-color: #E1FAFA;
+  border: 2px solid #B1EBED;
+  font-size: 120%;
+  cursor: pointer;
+  align-items: center;
+  border-radius: 3px;
+  padding: 0.75em;
+  width: 35%;
+  margin: 0 auto;
+  font-family: 'Nunito', sans-serif;
+}
+
+.practice-started {
+  position: relative;
+}
+
 .terminal-map-container {
   display: flex;
+}
+
+.show-directions-btn {
+  cursor: pointer;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  font-family: 'Nunito', sans-serif;
+  background-color: #E1FAFA;
+  border: 2px solid #B1EBED;
+  border-radius: 3px;
+  padding: 0.5em 1em;
+  font-size: 90%;
 }
