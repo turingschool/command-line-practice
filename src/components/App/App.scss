@@ -2,9 +2,28 @@
   display: flex;
   flex-direction: column;
   font-family: 'Nunito', sans-serif;
+  position: relative;
 }
 
 main {
   display: flex;
+  flex-direction: column;
+  color: #20232a;
   padding: 3em;
+  min-height: 620px;
+}
+
+.made-with {
+  text-align: right;
+  position: absolute;
+  bottom: 5px;
+  right: 15px;
+  margin-bottom: 0;
+  font-size: 90%;
+  color: #838383;
+
+  a {
+    color: #20232a;
+    text-decoration: none;
+  }
 }

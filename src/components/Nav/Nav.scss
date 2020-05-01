@@ -1,5 +1,5 @@
 nav {
-  background-color: #F1F1F1;
+  background-color: #F6F6F6;
   display: flex;
   justify-content: space-between;
   padding-left: 1em;
@@ -27,11 +27,9 @@ nav {
 }
 
 .current-link {
+  color: #20232a;
   border-bottom: 3px solid;
   border-image-slice: 1;
   border-width: 3px;
-  border-image-source: linear-gradient(270deg, #45F0F0 0%, #FED738 40%, #FD68FD 80%);
-  background: linear-gradient(270deg, #45F0F0 0%, #FED738 40%, #FD68FD 80%);
- -webkit-background-clip: text;
- -webkit-text-fill-color: transparent;
+  border-image-source: linear-gradient(270deg, #45F0F0 0%, #FEF238 50%, #FD68FD 90%);
 }
