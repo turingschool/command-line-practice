@@ -311,11 +311,6 @@ class App extends React.Component {
                 />
             </Route>
           </Switch>
-          <footer>
-            <p className="made-with">
-              <a href="https://github.com/turingschool/command-line-practice">Made with ❤️ in Denver</a>
-            </p>
-          </footer>
         </div>
       </Router>
     );
