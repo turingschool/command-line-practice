@@ -13,19 +13,62 @@
 .how-to-practice {
   margin-top: 0;
   font-size: 120%;
+  line-height: 1.55em;
+
+  span {
+    border-radius: 2px;
+    padding: 0 0.25em;
+  }
+
+  .blue {
+    background-color: #EBFDFD;
+    border: 1.25px solid #B1EBED;
+  }
+
+  .yellow {
+    background-color: #FEFEE3;
+    border: 1.25px solid #F7F7A2;
+  }
+
+  .rainbow {
+    border: 1.25px solid #B1EBED;
+    // border: 1.25px solid;
+    // border-image-slice: 1;
+    // border-width: 1.25px;
+    // border-image-source: linear-gradient(270deg, #ADFDFD 0%, #FDFD99 40%, #FEACFE 80%);
+    background-image: linear-gradient(270deg, #E1FAFA 0%, #FEFEE3 40%, #FFF1FF 80%);
+  }
+}
+
+.start-btn,
+.show-directions-btn {
+  font-family: 'Nunito', sans-serif;
+  border: 0;
+  background-color: #FFF1FF;
+  border: 2px solid #FFA2FF;
+  cursor: pointer;
+  border-radius: 3px;
 }
 
 .start-btn {
-  background-color: #E1FAFA;
-  border: 2px solid #B1EBED;
   font-size: 120%;
-  cursor: pointer;
   align-items: center;
-  border-radius: 3px;
   padding: 0.5em;
   width: 35%;
   margin: 0 auto;
-  font-family: 'Nunito', sans-serif;
+  margin-top: 2.5em;
+  display: flex;
+  justify-content: center;
+}
+
+.show-directions-btn {
+  position: absolute;
+  bottom: 0px;
+  left: 15px;
+  padding: 0.5em 1em;
+  font-size: 90%;
+  display: flex;
+  align-items: center;
 }
 
 .practice-started {
@@ -37,20 +80,18 @@
   padding: 0 3rem;
 }
 
-.show-directions-btn {
-  cursor: pointer;
-  position: absolute;
-  bottom: 0px;
-  left: 15px;
-  font-family: 'Nunito', sans-serif;
-  background-color: #E1FAFA;
-  border: 2px solid #B1EBED;
-  border-radius: 3px;
-  padding: 0.5em 1em;
-  font-size: 90%;
-}
-
 .start-btn:hover,
 .show-directions-btn:hover {
-  background-color: #D8FCFC;
+  background-color: #FFE1FF;
+}
+
+.right-arrow {
+  height: 1.2em;
+  margin-left: 0.35em;
+}
+
+.left-arrow {
+  transform: rotate(180deg);
+  height: 1em;
+  margin-right: 0.35em;
 }
