@@ -28,8 +28,5 @@ nav {
 
 .current-link {
   color: #20232a;
-  border-bottom: 3px solid;
-  border-image-slice: 1;
-  border-width: 3px;
-  border-image-source: linear-gradient(270deg, #66F4F4 0%, #FEF77D 50%, #FE8BFE 90%);
+  border-bottom: 3px solid #FFA2FF;
 }
