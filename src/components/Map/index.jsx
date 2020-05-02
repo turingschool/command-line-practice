@@ -23,7 +23,6 @@ const Map = ({currentExplanation, mapData, currentPath}) => {
 
   return (
     <section className="map-container">
-      <p>{currentExplanation}</p>
       <div className="visualizations">
         {displayMapData()}
       </div>
@@ -31,4 +30,5 @@ const Map = ({currentExplanation, mapData, currentPath}) => {
   );
 }
 
+// <p>{currentExplanation}</p>
 export default Map;
