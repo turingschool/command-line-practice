@@ -14,7 +14,13 @@
     font-size: 130%;
     font-family: 'Anonymous Pro', monospace;
     margin: 0;
+    cursor: pointer;
   }
+}
+
+.recent-command-card:hover {
+  background-color: #FFE1FF;
+  transition: 1s ease;
 }
 
 .show-details {
