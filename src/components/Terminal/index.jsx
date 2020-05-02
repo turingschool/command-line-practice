@@ -1,5 +1,6 @@
 import React from 'react';
 import './Terminal.scss';
+import RecentCommandCard from '../RecentCommandCard';
 
 class Terminal extends React.Component {
 
@@ -32,9 +33,9 @@ class Terminal extends React.Component {
   }
 
   showWelcomeMessage = () => {
-    return (
-      <p className="mono welcome">Welcome! Type in any command...</p>
-    );
+    // return (
+      // <p className="mono welcome">Welcome! Type in any command...</p>
+    // );
   }
 
   showPreviousOutput = () => {
@@ -107,6 +108,7 @@ class Terminal extends React.Component {
           onKeyDown={this.cycleCommands}
           autcomplete="off"
         />
+        <RecentCommandCard currentCommand={this.props.currentCommand}/>
       </div>
     );
   }

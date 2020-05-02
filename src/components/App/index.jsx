@@ -24,7 +24,7 @@ class App extends React.Component {
       currentLevel: 0,
       pathToCurrentLocation: [],
       currentCommand: [],
-      currentExplanation: '',
+      currentCommand: '',
       mapData: [
         {title: "root", type: "dir", levelFromRoot: 0, current: true},
         {title: "turing", type: "dir", levelFromRoot: 1, current: false},
@@ -238,17 +238,7 @@ class App extends React.Component {
     const commandType = command[0];
     const commandArgs = command.slice(1);
 
-    const explanations = {
-      'cd': 'You just ran cd.',
-      'ls': 'You just ran ls.',
-      'pwd': 'You just ran pwd.',
-      'touch': 'You just ran touch.',
-      'mkdir': 'You just ran mkdir.',
-      'rm': 'You just ran rm',
-      'rmdir': 'You just ran rmdir',
-     }
-
-    this.setState({currentExplanation: explanations[commandType]});
+    this.setState({currentCommand: commandType});
 
     switch (commandType) {
       case 'cd':
@@ -277,7 +267,7 @@ class App extends React.Component {
         return this.removeCommands(commandArgs, 'rmdir');
         break;
       default:
-        this.setState({currentExplanation: 'You just ran a command that does not exist'});
+        this.setState({currentCommand: 'Oops!'});
         return `${commandType}: command not found`;
     }
 
@@ -305,7 +295,7 @@ class App extends React.Component {
               <Practice
                 handleNewCommand={this.handleNewCommand}
                 mapData={mapData}
-                currentExplanation={this.state.currentExplanation}
+                currentCommand={this.state.currentCommand}
                 directoryStructure={this.state.directoryStructure}
                 currentPath={this.state.pathToCurrentLocation}
                 />
