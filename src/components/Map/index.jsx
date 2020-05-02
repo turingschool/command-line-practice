@@ -1,8 +1,9 @@
 import React from 'react';
 import './Map.scss';
 import Visualization from '../Visualization';
+import RecentCommandCard from '../RecentCommandCard';
 
-const Map = ({currentExplanation, mapData, currentPath}) => {
+const Map = ({currentCommand, mapData, currentPath}) => {
 
   const displayMapData = () => {
     return mapData.map((item, index) => {
@@ -23,7 +24,7 @@ const Map = ({currentExplanation, mapData, currentPath}) => {
 
   return (
     <section className="map-container">
-      <p>{currentExplanation}</p>
+      <RecentCommandCard currentCommand={currentCommand}/>
       <div className="visualizations">
         {displayMapData()}
       </div>

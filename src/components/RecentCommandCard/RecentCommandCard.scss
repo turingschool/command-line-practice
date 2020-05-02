@@ -1,0 +1,22 @@
+.recent-command-card {
+  border: 1px solid #FFA2FF;
+  border-radius: 3px;
+  margin-bottom: 10px;
+  color: #20232a;
+  background-color: #FFFBFF;
+  padding: 1em;
+
+  h4 {
+    font-size: 130%;
+    font-family: 'Anonymous Pro', monospace;
+    margin: 0;
+  }
+}
+
+.show-details {
+  display: block;
+}
+
+.hide-details {
+  display: none;
+}

@@ -5,7 +5,7 @@ import arrow from './assets/arrow.svg';
 
 import './Practice.scss';
 
-const Practice = ({handleNewCommand, mapData, currentExplanation, directoryStructure, currentPath}) => {
+const Practice = ({handleNewCommand, mapData, currentCommand, directoryStructure, currentPath}) => {
   let isReturning;
   if (localStorage.getItem('isReturning') === 'true') {
     isReturning = true;
@@ -41,9 +41,9 @@ const Practice = ({handleNewCommand, mapData, currentExplanation, directoryStruc
         <div className="terminal-map-container">
           <Terminal handleNewCommand={handleNewCommand}/>
           <Map
-          mapData={mapData}
-          currentExplanation={currentExplanation}
-          directoryStructure={directoryStructure}
+            mapData={mapData}
+            currentCommand={currentCommand}
+            directoryStructure={directoryStructure}
           />
         </div>
         <button className="show-directions-btn" onClick={changeVisitorStatus}>
