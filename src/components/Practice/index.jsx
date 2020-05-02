@@ -39,10 +39,12 @@ const Practice = ({handleNewCommand, mapData, currentCommand, directoryStructure
     return (
       <div className="practice-started">
         <div className="terminal-map-container">
-          <Terminal handleNewCommand={handleNewCommand}/>
+          <Terminal
+            handleNewCommand={handleNewCommand}
+            currentCommand={currentCommand}
+          />
           <Map
             mapData={mapData}
-            currentCommand={currentCommand}
             directoryStructure={directoryStructure}
           />
         </div>

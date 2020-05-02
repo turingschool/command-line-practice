@@ -10,7 +10,7 @@ const RecentCommandCard = ({currentCommand}) => {
 
   return (
     <section className="recent-command-card">
-      <h4 onClick={toggleExpand}>{currentCommand || "No command yet..."}</h4>
+      <h4 onClick={toggleExpand}>{currentCommand || "Run a command!"}</h4>
       <div className={isExpanded ? "show-details" : "hide-details"}>
         <p>details</p>
         <p>details</p>

@@ -267,7 +267,7 @@ class App extends React.Component {
         return this.removeCommands(commandArgs, 'rmdir');
         break;
       default:
-        this.setState({currentCommand: 'You just ran a command that does not exist'});
+        this.setState({currentCommand: 'Oops!'});
         return `${commandType}: command not found`;
     }
 
