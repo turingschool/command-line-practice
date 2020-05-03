@@ -15,7 +15,7 @@ class Challenges extends React.Component {
       currentCommand: [],
       currentChallenge: 0,
       currentSolution: [
-        {title: "root", type: "dir", levelFromRoot: 0 },
+        {title: "root", type: "dir", levelFromRoot: 0, current: true },
         {title: "turing", type: "dir", levelFromRoot: 1 },
       ],
     }
@@ -242,40 +242,37 @@ class Challenges extends React.Component {
       if (match) {
         this.setState(state => {
           currentChallenge: state.currentChallenge += 1
-        })
+        });
       } else {
         console.log("not yet...");
       }
     }
   }
 
-  displayReturnVisitorView = () => {
-    const mapData1 = [
-      {title: "root", type: "dir", levelFromRoot: 0, current: true},
-      {title: "turing", type: "dir", levelFromRoot: 1 },
-      {title: "0mod", type: "dir", levelFromRoot: 2 },
-      {title: "personal", type: "dir", levelFromRoot: 1 },
-    ];
-    //also solutions[0] ^^^
+  displayCurrentChallenge = () => {
+    solutions.forEach(solution => {
+      solution[0].current = true;
+    });
+
     return (
       <div>
-        <p className="challenge-text">Challenge 1: The diagram on the right no longer represents your current directory structure; you goal is to create that structure. Use commands you know to discover what you are starting with, then add the appropriate files and directories.</p>
+        <p className="challenge-text">
+          <strong>Challenge {this.state.currentChallenge + 1}: </strong>The diagram on the right no longer represents your current directory structure; you goal is to create that structure. Use commands you know to discover what you are starting with, then add the appropriate files and directories.</p>
         <div className="terminal-map-container">
-            <Terminal
-              handleNewCommand={this.handleNewCommand}
-            />
-            <Map mapData={mapData1} />
+            <Terminal handleNewCommand={this.handleNewCommand} />
+            <Map mapData={solutions[this.state.currentChallenge]} />
         </div>
       </div>
     );
   }
 
   render() {
+    // can't call here since it sets state!
     this.checkSolution();
 
     return (
       <main className="challenges-main">
-        {this.displayReturnVisitorView()}
+        {this.displayCurrentChallenge()}
       </main>
     );
   }
