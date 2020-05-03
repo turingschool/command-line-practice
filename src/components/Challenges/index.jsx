@@ -193,7 +193,6 @@ class Challenges extends React.Component {
   }
 
   handleNewCommand = (command) => {
-
     this.setState({ currentCommand: command });
     const commandType = command[0];
     const commandArgs = command.slice(1);
@@ -201,6 +200,7 @@ class Challenges extends React.Component {
     switch (commandType) {
       case 'cd':
         this.cdCommand(commandArgs);
+        this.checkSolution();
         return null;
         break;
       case 'ls':
@@ -211,24 +211,28 @@ class Challenges extends React.Component {
         break;
       case 'touch':
         this.touchCommand(commandArgs);
+        this.checkSolution();
         return null;
         break;
       case 'mkdir':
         this.mkdirCommand(commandArgs);
+        this.checkSolution();
         return null;
         break;
       case 'rm':
-        return this.removeCommands(commandArgs, 'rm');
+        let outcome = this.removeCommands(commandArgs, 'rm');
+        this.checkSolution();
+        return outcome;
         break;
       case 'rmdir':
-        return this.removeCommands(commandArgs, 'rmdir');
+        outcome = this.removeCommands(commandArgs, 'rmdir');
+        this.checkSolution();
+        return outcome;
         break;
       default:
         this.setState({currentExplanation: 'You just ran a command that does not exist'});
         return `${commandType}: command not found`;
     }
-
-    this.setState({currentCommand: []});
   }
 
   checkSolution = () => {
@@ -268,7 +272,7 @@ class Challenges extends React.Component {
 
   render() {
     // can't call here since it sets state!
-    this.checkSolution();
+    // this.checkSolution();
 
     return (
       <main className="challenges-main">
