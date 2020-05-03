@@ -9,7 +9,7 @@ const Welcome = () => {
       <ul>
         <li><strong>Learn:</strong> Read about a set of commands - learn what they are used for and how to use them in your terminal</li>
         <li><strong>PLayground:</strong> Interact with a terminal in this app to practice using the commands while you see a visual representation of the directories and files</li>
-        <li><strong>Study:</strong> Coming soon.</li>
+        <li><strong>Challenges:</strong> Coming soon.</li>
       </ul>
     </main>
   );

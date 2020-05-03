@@ -2,7 +2,7 @@ import React from 'react';
 import Nav from '../Nav';
 import Playground from '../Playground';
 import Learn from '../Learn';
-import Study from '../Study';
+import Challenges from '../Challenges';
 import Welcome from '../Welcome';
 import './App.scss';
 import {
@@ -23,11 +23,11 @@ const App = () => {
           <Route path="/intro">
             <Learn />
           </Route>
-          <Route path="/study">
-            <Study />
-          </Route>
           <Route path="/playground">
-            <Playground />
+          <Playground />
+          </Route>
+          <Route path="/challenges">
+            <Challenges />
           </Route>
         </Switch>
       </div>
