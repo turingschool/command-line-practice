@@ -1,19 +1,21 @@
-.study-main {
-  display: flex;
-  width: 65%;
-  margin: 0 auto;
+.challenges-main {
+  padding: 3rem 0;
 
   h2 {
-    font-size: 150%;
+    font-size: 160%;
   }
 
-  p {
-    font-size: 120%;
-    margin: 0.25em 0;
-  }
+}
 
-  .construction {
-    font-size: 500%;
-    text-align: center;
-  }
+.challenge-container {
+  display: flex;
+  border: 1px solid red;
+}
+
+.challenge-text {
+  padding: 0 3rem;
+}
+.solution {
+  height: 390px;
+  width: 35%;
 }
