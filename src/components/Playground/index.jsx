@@ -1,8 +1,7 @@
-import React, {useState} from 'react';
+import React from 'react';
 import Terminal from '../Terminal';
 import Map from '../Map';
 import arrow from './assets/arrow.svg';
-
 import './Playground.scss';
 
 class Playground extends React.Component {
@@ -287,14 +286,10 @@ class Playground extends React.Component {
 
   displayReturnVisitorView = () => {
     return (
-      <div className="practice-started">
+      <div className="playground-started">
         <div className="terminal-map-container">
           <Terminal handleNewCommand={this.handleNewCommand}/>
-          <Map
-            mapData={this.state.mapData}
-            currentExplanation={this.state.currentExplanation}
-            directoryStructure={this.state.directoryStructure}
-          />
+          <Map mapData={this.state.mapData} />
         </div>
         <button className="show-directions-btn" onClick={this.changeVisitorStatus}>
           <img className="left-arrow" src={arrow} alt="left arrow"/>
@@ -308,7 +303,7 @@ class Playground extends React.Component {
     const mapData = this.updateCurrentWorkingDir();
 
     return (
-      <main className="practice-main">
+      <main className="playground-main">
         {this.state.isReturning ? this.displayReturnVisitorView() : this.displayNewVisitorView()}
       </main>
     );
