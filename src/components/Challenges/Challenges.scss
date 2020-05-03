@@ -22,3 +22,34 @@
   height: 390px;
   width: 35%;
 }
+
+.level-complete-container {
+  padding: 0 3rem;
+
+  p {
+    font-size: 200%;
+    text-align: center;
+  }
+}
+
+.next-level-btn {
+  font-family: 'Nunito', sans-serif;
+  border: 0;
+  background-color: #FFF1FF;
+  border: 2px solid #FFA2FF;
+  cursor: pointer;
+  border-radius: 3px;
+  font-size: 120%;
+  padding: 0.6em 0.5em 0.4em;
+  width: 25%;
+  margin: 0 auto;
+  margin-top: 2.5em;
+  display: flex;
+  justify-content: center;
+  transition: 1s ease;
+}
+
+.next-level-btn:hover {
+  background-color: #FFE1FF;
+  transition: 1s ease;
+}

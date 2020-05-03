@@ -258,18 +258,23 @@ class Challenges extends React.Component {
   }
 
   displayCongrats = () => {
-    if (this.state.currentChallenge < 2) {
+    const messages = ['Bravo', 'You are crushing it!', 'Look at you go!', 'Whoo hoo', 'You did the thing!'];
+    const randomNum = Math.floor(Math.random() * 5);
+
+    if (this.state.currentChallenge < 3) {
       return (
-        <div>
-          <p>look at you, you did it!</p>
-          <button onClick={() => this.displayNextChallenge()}>
+        <div className="level-complete-container">
+          <p>{messages[randomNum]}</p>
+          <button className="next-level-btn" onClick={() => this.displayNextChallenge()}>
             Go to Level {this.state.currentChallenge + 1}!
           </button>
         </div>
       );
     } else {
       return (
-        <p>You've completed all levels!</p>
+        <div className="level-complete-container">
+          <p>You've completed all levels!</p>
+        </div>
       );
     }
   }
