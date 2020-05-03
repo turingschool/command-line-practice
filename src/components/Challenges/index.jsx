@@ -16,6 +16,7 @@ class Challenges extends React.Component {
       currentChallenge: 0,
       justWon: false,
       currentSolution: [
+        {title: "root", type: "dir", levelFromRoot: 0 },
         {title: "turing", type: "dir", levelFromRoot: 1 },
       ],
     }
@@ -26,17 +27,17 @@ class Challenges extends React.Component {
     const levelFromRoot = path.length + 1;
     const newItem = {title, type, levelFromRoot};
 
-    if (levelFromRoot === 1) {
+    // if (levelFromRoot === 1) {
       this.setState(state => {
         return { currentSolution: [...state.currentSolution, newItem] }
       });
-    } else {
-      this.state.currentSolution.forEach((el, index) => {
-        if (el.title === path[path.length -1]) {
-          this.state.currentSolution.splice(index + 1, 0, newItem);
-        }
-      });
-    }
+    // } else {
+    //   this.state.currentSolution.forEach((el, index) => {
+    //     if (el.title === path[path.length -1]) {
+    //       this.state.currentSolution.splice(index + 1, 0, newItem);
+    //     }
+    //   });
+    // }
   }
 
   findDirectDescendants = (path) => {
@@ -200,7 +201,6 @@ class Challenges extends React.Component {
     switch (commandType) {
       case 'cd':
         this.cdCommand(commandArgs);
-        this.checkSolution();
         return null;
         break;
       case 'ls':
@@ -211,23 +211,19 @@ class Challenges extends React.Component {
         break;
       case 'touch':
         this.touchCommand(commandArgs);
-        this.checkSolution();
         return null;
         break;
       case 'mkdir':
         this.mkdirCommand(commandArgs);
-        this.checkSolution();
         return null;
         break;
       case 'rm':
         let outcome = this.removeCommands(commandArgs, 'rm');
-        this.checkSolution();
         return outcome;
         break;
       case 'rmdir':
-        outcome = this.removeCommands(commandArgs, 'rmdir');
-        this.checkSolution();
-        return outcome;
+        let result = this.removeCommands(commandArgs, 'rmdir');
+        return result;
         break;
       default:
         this.setState({currentExplanation: 'You just ran a command that does not exist'});
@@ -236,41 +232,35 @@ class Challenges extends React.Component {
   }
 
   checkSolution = () => {
-    console.log("solutions::", solutions);
-    console.log("state::", this.state.currentSolution);
-
     if (this.state.currentSolution.length === solutions[this.state.currentChallenge].length) {
-      const currentSolution = JSON.stringify(this.state.currentSolution);
-      console.log(currentSolution, solutions[0]);
 
-      const match = solutions[0].every(item => {
-        console.log("item:", item);
-        return currentSolution.includes(JSON.stringify(item));
+      const match = this.state.currentSolution.map(item => {
+        return solutions[this.state.currentChallenge].map(checkItem => {
+          return (item.type === checkItem.type && item.title === checkItem.title) ? true : false;
+        });
       });
 
-      if (match) {
+      const finalCheck = match.every(list => {
+        return list.some(value => value === true);
+      });
+
+      if (finalCheck) {
         this.setState(state => {
           currentChallenge: state.currentChallenge += 1
         });
         this.setState({justWon: true});
-      } else {
-        console.log("not yet...");
-      }
+      } 
     }
   }
 
   displayCurrentChallenge = () => {
-    const solutionsWithRoot = [
-      {title: "root", type: "dir", levelFromRoot: 0, current: true }, ...solutions[this.state.currentChallenge]
-    ];
-
     return (
       <div>
         <p className="challenge-text">
-          <strong>Challenge {this.state.currentChallenge + 1}: </strong>The diagram on the right no longer represents your current directory structure; you goal is to create that structure. Use commands you know to discover what you are starting with, then add the appropriate files and directories.</p>
+          <strong>Challenge {this.state.currentChallenge + 1}: </strong>The diagram on the right no longer represents your current directory structure; you goal is to <em>create</em> that structure. Use commands you know to discover what you are starting with, then add the appropriate files and directories.</p>
         <div className="terminal-map-container">
             <Terminal handleNewCommand={this.handleNewCommand} />
-            <Map mapData={solutionsWithRoot} />
+            <Map mapData={solutions[this.state.currentChallenge]} />
         </div>
       </div>
     );
@@ -286,18 +276,36 @@ class Challenges extends React.Component {
   }
 
   displayNextChallenge = () => {
-    this.setState({
-      pathToCurrentLocation: [],
-      currentLevel: 0,
-      justWon: false,
-      directoryStructure: {turing: {}},
-      currentSolution: [
-        {title: "turing", type: "dir", levelFromRoot: 1 },
-      ],
-    });
+    if (this.state.currentChallenge < 2) {
+      this.setState({
+        pathToCurrentLocation: [],
+        currentLevel: 0,
+        justWon: false,
+        directoryStructure: {turing: {}},
+        currentSolution: [
+          {title: "root", type: "dir", levelFromRoot: 0 },
+          {title: "turing", type: "dir", levelFromRoot: 1 },
+        ],
+      });
+    } else if (this.state.currentChallenge === 2) {
+      this.setState({
+        pathToCurrentLocation: ['other'],
+        currentLevel: 1,
+        justWon: false,
+        directoryStructure: {turing: {}, other: { "random-file.rb": null }},
+        currentSolution: [
+          {title: "root", type: "dir", levelFromRoot: 0 },
+          {title: "turing", type: "dir", levelFromRoot: 1 },
+          {title: "other", type: "dir", levelFromRoot: 1 },
+          {title: "random-file.rb", type: "dir", levelFromRoot: 2 },
+        ],
+      });
+    }
   }
 
   render() {
+    this.checkSolution();
+
     return (
       <main className="challenges-main">
         {this.state.justWon ? this.displayCongrats() : this.displayCurrentChallenge()}
