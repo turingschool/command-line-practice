@@ -1,5 +1,6 @@
-.practice-main {
+.playground-main {
   padding: 3rem 0;
+
   h2 {
     font-size: 160%;
   }
@@ -48,6 +49,7 @@
   border: 2px solid #FFA2FF;
   cursor: pointer;
   border-radius: 3px;
+  transition: 1s ease;
 }
 
 .start-btn {
@@ -71,7 +73,7 @@
   align-items: center;
 }
 
-.practice-started {
+.playground-started {
   position: relative;
 }
 
@@ -83,6 +85,7 @@
 .start-btn:hover,
 .show-directions-btn:hover {
   background-color: #FFE1FF;
+  transition: 1s ease;
 }
 
 .right-arrow {

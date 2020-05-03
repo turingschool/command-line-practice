@@ -2,13 +2,11 @@ import React from 'react';
 import './Map.scss';
 import Visualization from '../Visualization';
 
-const Map = ({currentExplanation, mapData, currentPath}) => {
+const Map = ({mapData}) => {
 
   const displayMapData = () => {
     return mapData.map((item, index) => {
-
       const current = item.current;
-
       return (
         <Visualization
           key={index}
