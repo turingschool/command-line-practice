@@ -14,8 +14,8 @@ class Challenges extends React.Component {
       pathToCurrentLocation: [],
       currentCommand: [],
       currentChallenge: 0,
+      justWon: false,
       currentSolution: [
-        {title: "root", type: "dir", levelFromRoot: 0, current: true },
         {title: "turing", type: "dir", levelFromRoot: 1 },
       ],
     }
@@ -236,10 +236,15 @@ class Challenges extends React.Component {
   }
 
   checkSolution = () => {
-    if (this.state.currentSolution.length === solutions[0].length) {
+    console.log("solutions::", solutions);
+    console.log("state::", this.state.currentSolution);
+
+    if (this.state.currentSolution.length === solutions[this.state.currentChallenge].length) {
       const currentSolution = JSON.stringify(this.state.currentSolution);
+      console.log(currentSolution, solutions[0]);
 
       const match = solutions[0].every(item => {
+        console.log("item:", item);
         return currentSolution.includes(JSON.stringify(item));
       });
 
@@ -247,6 +252,7 @@ class Challenges extends React.Component {
         this.setState(state => {
           currentChallenge: state.currentChallenge += 1
         });
+        this.setState({justWon: true});
       } else {
         console.log("not yet...");
       }
@@ -254,9 +260,9 @@ class Challenges extends React.Component {
   }
 
   displayCurrentChallenge = () => {
-    solutions.forEach(solution => {
-      solution[0].current = true;
-    });
+    const solutionsWithRoot = [
+      {title: "root", type: "dir", levelFromRoot: 0, current: true }, ...solutions[this.state.currentChallenge]
+    ];
 
     return (
       <div>
@@ -264,19 +270,37 @@ class Challenges extends React.Component {
           <strong>Challenge {this.state.currentChallenge + 1}: </strong>The diagram on the right no longer represents your current directory structure; you goal is to create that structure. Use commands you know to discover what you are starting with, then add the appropriate files and directories.</p>
         <div className="terminal-map-container">
             <Terminal handleNewCommand={this.handleNewCommand} />
-            <Map mapData={solutions[this.state.currentChallenge]} />
+            <Map mapData={solutionsWithRoot} />
         </div>
       </div>
     );
   }
 
-  render() {
-    // can't call here since it sets state!
-    // this.checkSolution();
+  displayCongrats = () => {
+    return (
+      <div>
+        <p>look at you, you did it!</p>
+        <button onClick={() => this.displayNextChallenge()}>Go to next level!</button>
+      </div>
+    );
+  }
 
+  displayNextChallenge = () => {
+    this.setState({
+      pathToCurrentLocation: [],
+      currentLevel: 0,
+      justWon: false,
+      directoryStructure: {turing: {}},
+      currentSolution: [
+        {title: "turing", type: "dir", levelFromRoot: 1 },
+      ],
+    });
+  }
+
+  render() {
     return (
       <main className="challenges-main">
-        {this.displayCurrentChallenge()}
+        {this.state.justWon ? this.displayCongrats() : this.displayCurrentChallenge()}
       </main>
     );
   }

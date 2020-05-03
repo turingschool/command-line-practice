@@ -1,15 +1,12 @@
 const solutions = [
   [
-    {title: "root", type: "dir", levelFromRoot: 0 },
     {title: "turing", type: "dir", levelFromRoot: 1 },
     {title: "0mod", type: "dir", levelFromRoot: 2 },
-    {title: "personal", type: "dir", levelFromRoot: 1 }
+    {title: "personal", type: "dir", levelFromRoot: 1 },
   ],
   [
-    {title: "root", type: "dir", levelFromRoot: 0 },
     {title: "turing", type: "dir", levelFromRoot: 1 },
     {title: "0mod", type: "dir", levelFromRoot: 2 },
-    {title: "practice", type: "dir", levelFromRoot: 3 },
     {title: "capstone", type: "dir", levelFromRoot: 3 },
     {title: "1mod", type: "dir", levelFromRoot: 2 },
     {title: "personal", type: "dir", levelFromRoot: 1 },
@@ -17,7 +14,6 @@ const solutions = [
     {title: "letter.txt", type: "file", levelFromRoot: 2 },
   ],
   [
-    {title: "root", type: "dir", levelFromRoot: 0 },
     {title: "turing", type: "dir", levelFromRoot: 1 },
     {title: "0mod", type: "dir", levelFromRoot: 2 },
     {title: "practice", type: "dir", levelFromRoot: 3 },
