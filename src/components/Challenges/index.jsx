@@ -27,17 +27,9 @@ class Challenges extends React.Component {
     const levelFromRoot = path.length + 1;
     const newItem = {title, type, levelFromRoot};
 
-    // if (levelFromRoot === 1) {
-      this.setState(state => {
-        return { currentSolution: [...state.currentSolution, newItem] }
-      });
-    // } else {
-    //   this.state.currentSolution.forEach((el, index) => {
-    //     if (el.title === path[path.length -1]) {
-    //       this.state.currentSolution.splice(index + 1, 0, newItem);
-    //     }
-    //   });
-    // }
+    this.setState(state => {
+      return {currentSolution: [...state.currentSolution, newItem]}
+    });
   }
 
   findDirectDescendants = (path) => {
@@ -233,7 +225,6 @@ class Challenges extends React.Component {
 
   checkSolution = () => {
     if (this.state.currentSolution.length === solutions[this.state.currentChallenge].length) {
-
       const match = this.state.currentSolution.map(item => {
         return solutions[this.state.currentChallenge].map(checkItem => {
           return (item.type === checkItem.type && item.title === checkItem.title) ? true : false;
@@ -249,7 +240,7 @@ class Challenges extends React.Component {
           currentChallenge: state.currentChallenge += 1
         });
         this.setState({justWon: true});
-      } 
+      }
     }
   }
 
@@ -259,20 +250,28 @@ class Challenges extends React.Component {
         <p className="challenge-text">
           <strong>Challenge {this.state.currentChallenge + 1}: </strong>The diagram on the right no longer represents your current directory structure; you goal is to <em>create</em> that structure. Use commands you know to discover what you are starting with, then add the appropriate files and directories.</p>
         <div className="terminal-map-container">
-            <Terminal handleNewCommand={this.handleNewCommand} />
-            <Map mapData={solutions[this.state.currentChallenge]} />
+          <Terminal handleNewCommand={this.handleNewCommand} />
+          <Map mapData={solutions[this.state.currentChallenge]} />
         </div>
       </div>
     );
   }
 
   displayCongrats = () => {
-    return (
-      <div>
-        <p>look at you, you did it!</p>
-        <button onClick={() => this.displayNextChallenge()}>Go to next level!</button>
-      </div>
-    );
+    if (this.state.currentChallenge < 2) {
+      return (
+        <div>
+          <p>look at you, you did it!</p>
+          <button onClick={() => this.displayNextChallenge()}>
+            Go to Level {this.state.currentChallenge + 1}!
+          </button>
+        </div>
+      );
+    } else {
+      return (
+        <p>You've completed all levels!</p>
+      );
+    }
   }
 
   displayNextChallenge = () => {
@@ -297,14 +296,14 @@ class Challenges extends React.Component {
           {title: "root", type: "dir", levelFromRoot: 0 },
           {title: "turing", type: "dir", levelFromRoot: 1 },
           {title: "other", type: "dir", levelFromRoot: 1 },
-          {title: "random-file.rb", type: "dir", levelFromRoot: 2 },
+          {title: "random-file.rb", type: "file", levelFromRoot: 2 },
         ],
       });
     }
   }
 
   render() {
-    this.checkSolution();
+    solutions[this.state.currentChallenge] ? this.checkSolution() : this.displayCongrats();
 
     return (
       <main className="challenges-main">
