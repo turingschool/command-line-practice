@@ -270,32 +270,7 @@ class Challenges extends React.Component {
     );
   }
 
-  updateCurrentWorkingDir = () => {
-    const pathToCurrent = this.state.pathToCurrentLocation;
-
-    const updatedMap = this.state.currentSolution.map((item, i) => {
-      const correctTitle = item.title === pathToCurrent[pathToCurrent.length - 1];
-      const correctLevel = item.levelFromRoot === this.state.currentLevel;
-
-      // if (item.type === 'dir' && correctTitle && correctLevel) {
-      //   item.current = true;
-      // } else {
-      //   item.current = false;
-      // }
-
-      return item;
-    });
-
-    if (updatedMap.every(item => !item.current)) {
-      updatedMap[0].current = true;
-    }
-
-    return updatedMap;
-  }
-
   render() {
-    console.log(this.state.currentSolution);
-    // this.updateCurrentWorkingDir();
     this.checkSolution();
 
     return (
