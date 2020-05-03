@@ -1,6 +1,6 @@
 import React from 'react';
 import Nav from '../Nav';
-import Practice from '../Practice';
+import Playground from '../Playground';
 import Learn from '../Learn';
 import Study from '../Study';
 import Welcome from '../Welcome';
@@ -301,14 +301,14 @@ class App extends React.Component {
             <Route path="/study">
               <Study />
             </Route>
-            <Route path="/practice">
-              <Practice
+            <Route path="/playground">
+              <Playground
                 handleNewCommand={this.handleNewCommand}
                 mapData={mapData}
                 currentExplanation={this.state.currentExplanation}
                 directoryStructure={this.state.directoryStructure}
                 currentPath={this.state.pathToCurrentLocation}
-                />
+              />
             </Route>
           </Switch>
         </div>

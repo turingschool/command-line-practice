@@ -3,9 +3,9 @@ import Terminal from '../Terminal';
 import Map from '../Map';
 import arrow from './assets/arrow.svg';
 
-import './Practice.scss';
+import './Playground.scss';
 
-const Practice = ({handleNewCommand, mapData, currentExplanation, directoryStructure, currentPath}) => {
+const Playground = ({handleNewCommand, mapData, currentExplanation, directoryStructure, currentPath}) => {
   let isReturning;
   if (localStorage.getItem('isReturning') === 'true') {
     isReturning = true;
@@ -24,7 +24,7 @@ const Practice = ({handleNewCommand, mapData, currentExplanation, directoryStruc
   const displayNewVisitorView = () => {
     return (
       <div className="how-to-practice-section">
-        <h2>Practice</h2>
+        <h2>Playground</h2>
         <p className="how-to-practice">In this section, you will practice the commands you've learned. You'll be provided with a terminal window to run the commands, and next to it, a diagram that shows a visual representation of the direcotry structure you are working with. It will change as you add and remove files and directories.</p>
         <p className="how-to-practice">Build out a directory structure and navigate through it, delete files or directories, etc. - get comfortable with it! As you run each command, you'll see the diagram update. In the diagram, <span className="blue">directories are blue</span> and <span className="yellow">files are yellow</span>. The directory with the <span className="rainbow">rainbow background is your current working directory</span>.</p>
         <button className="start-btn" onClick={changeVisitorStatus}>
@@ -61,4 +61,4 @@ const Practice = ({handleNewCommand, mapData, currentExplanation, directoryStruc
   );
 }
 
-export default Practice;
+export default Playground;
