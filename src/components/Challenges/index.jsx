@@ -264,7 +264,7 @@ class Challenges extends React.Component {
       return (
         <div className="challenges-zero-state">
           <h2>Challenges</h2>
-          <p>You have a series of 3 challenges to complete. For each, you will be given a terminal to run commands, and a diagram of the a directory structure.</p>
+          <p>You have a series of three challenges to complete. For each, you will be given a terminal to run commands, and a diagram of the <em>desired</em> directory structure.</p>
           <p className="rainbow">Your goal is to create a directory structure that matches what you see in the diagram.</p>
           <p>The diagram will <strong>not</strong> update or tell you where you currently are; you have to use your commands to check what you have. What's already in your directory structure? Use you commands to figure that out, and then add or remove and files and directories necessary. Once you are successful, you'll move to the next level.</p>
           <button className="next-level-btn" onClick={() => this.displayNextChallenge()}>
