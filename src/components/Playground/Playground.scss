@@ -1,5 +1,10 @@
 .playground-main {
   padding: 3rem 0;
+  position: relative;
+
+  .how-to-practice {
+    margin: 0 7rem 1.5rem;
+  }
 
   h2 {
     font-size: 160%;
@@ -33,10 +38,6 @@
 
   .rainbow {
     border: 1.25px solid #B1EBED;
-    // border: 1.25px solid;
-    // border-image-slice: 1;
-    // border-width: 1.25px;
-    // border-image-source: linear-gradient(270deg, #ADFDFD 0%, #FDFD99 40%, #FEACFE 80%);
     background-image: linear-gradient(270deg, #E1FAFA 0%, #FEFEE3 40%, #FFF1FF 80%);
   }
 }
@@ -73,13 +74,17 @@
   align-items: center;
 }
 
-.playground-started {
-  position: relative;
-}
+// .playground-started {
+//   position: relative;
+//
+//   .how-to-practice {
+//     margin: 0 3rem 1.5rem;
+//   }
+// }
 
 .terminal-map-container {
   display: flex;
-  padding: 0 3rem;
+  padding: 0 7rem;
 }
 
 .start-btn:hover,

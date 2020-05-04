@@ -270,23 +270,24 @@ class Playground extends React.Component {
     this.setState({currentCommand: []});
   }
 
-  displayNewVisitorView = () => {
-    return (
-      <div className="how-to-practice-section">
-        <h2>Playground</h2>
-        <p className="how-to-practice">In this section, you will practice the commands you've learned. You'll be provided with a terminal window to run the commands, and next to it, a diagram that shows a visual representation of the directory structure you are working with. It will change as you add and remove files and directories.</p>
-        <p className="how-to-practice">Build out a directory structure and navigate through it, delete files or directories, etc. - get comfortable with it! As you run each command, you'll see the diagram update. In the diagram, <span className="blue">directories are blue</span> and <span className="yellow">files are yellow</span>. The directory with the <span className="rainbow">rainbow background is your current working directory</span>.</p>
-        <button className="start-btn" onClick={this.changeVisitorStatus}>
-          Got It! Let's get started
-          <img className="right-arrow" src={arrow} alt="right arrow"/>
-        </button>
-      </div>
-    );
-  }
+  // displayNewVisitorView = () => {
+  //   return (
+  //     <div className="how-to-practice-section">
+  //       <h2>Playground</h2>
+  //       <p className="how-to-practice">In this section, you will practice the commands you've learned. You'll be provided with a terminal window to run the commands, and next to it, a diagram that shows a visual representation of the directory structure you are working with. It will change as you add and remove files and directories.</p>
+  //       <p className="how-to-practice">Build out a directory structure and navigate through it, delete files or directories, etc. - get comfortable with it! As you run each command, you'll see the diagram update. In the diagram, <span className="blue">directories are blue</span> and <span className="yellow">files are yellow</span>. The directory with the <span className="rainbow">rainbow background is your working directory</span>.</p>
+  //       <button className="start-btn" onClick={this.changeVisitorStatus}>
+  //         Got It! Let's get started
+  //         <img className="right-arrow" src={arrow} alt="right arrow"/>
+  //       </button>
+  //     </div>
+  //   );
+  // }
 
   displayReturnVisitorView = () => {
     return (
       <div className="playground-started">
+        <p className="how-to-practice">Build out a directory structure and navigate through it, delete files or directories, etc. - get comfortable with it! As you create and remove files and directories, you'll see the diagram update to represent your directory structure. In the diagram, <span className="blue">directories are blue</span> and <span className="yellow">files are yellow</span>. The directory with the <span className="rainbow">rainbow background is your working directory</span>.</p>
         <div className="terminal-map-container">
           <Terminal handleNewCommand={this.handleNewCommand}/>
           <Map mapData={this.state.mapData} />
@@ -304,7 +305,15 @@ class Playground extends React.Component {
 
     return (
       <main className="playground-main">
-        {this.state.isReturning ? this.displayReturnVisitorView() : this.displayNewVisitorView()}
+        <p className="how-to-practice">Build out a directory structure and navigate through it, delete files or directories, etc. to get comfortable with using the commands you've learned! This is a playground - you can't mess it up! As you create and remove files and directories, you'll see the diagram update to represent your directory structure. In the diagram, <span className="blue">directories are blue</span> and <span className="yellow">files are yellow</span>. The directory with the <span className="rainbow">rainbow background is your working directory</span>.</p>
+        <div className="terminal-map-container">
+          <Terminal handleNewCommand={this.handleNewCommand}/>
+          <Map mapData={this.state.mapData} />
+        </div>
+        <button className="show-directions-btn" onClick={this.changeVisitorStatus}>
+          <img className="left-arrow" src={arrow} alt="left arrow"/>
+          Show me the directions again
+        </button>
       </main>
     );
   }
