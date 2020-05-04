@@ -284,7 +284,7 @@ class Challenges extends React.Component {
     } else {
       return (
         <div className="level-complete-container">
-          <p>You've completed all levels!</p>
+          <h3>You've completed all levels!</h3>
         </div>
       );
     }
