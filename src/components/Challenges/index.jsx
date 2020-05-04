@@ -14,7 +14,7 @@ class Challenges extends React.Component {
       pathToCurrentLocation: [],
       currentCommand: [],
       currentChallenge: 0,
-      justWon: false,
+      justWon: true,
       currentSolution: [
         {title: "root", type: "dir", levelFromRoot: 0 },
         {title: "turing", type: "dir", levelFromRoot: 1 },
@@ -247,8 +247,7 @@ class Challenges extends React.Component {
   displayCurrentChallenge = () => {
     return (
       <div>
-        <p className="challenge-text">
-          <strong>Challenge {this.state.currentChallenge + 1}: </strong>The diagram on the right no longer represents your current directory structure; you goal is to <em>create</em> that structure. Use commands you know to discover what you are starting with, then add the appropriate files and directories.</p>
+        <p className="current-challenge">Challenge {this.state.currentChallenge + 1}</p>
         <div className="terminal-map-container">
           <Terminal handleNewCommand={this.handleNewCommand} />
           <Map mapData={solutions[this.state.currentChallenge]} />
@@ -257,14 +256,26 @@ class Challenges extends React.Component {
     );
   }
 
-  displayCongrats = () => {
+  displayMessage = () => {
     const messages = ['Bravo', 'You are crushing it!', 'Look at you go!', 'Whoo hoo', 'You did the thing!'];
     const randomNum = Math.floor(Math.random() * 5);
 
-    if (this.state.currentChallenge < 3) {
+    if (this.state.currentChallenge === 0) {
+      return (
+        <div className="challenges-zero-state">
+          <h2>Challenges</h2>
+          <p>You have a series of 3 challenges to complete. For each, you will be given a terminal to run commands, and a diagram of the a directory structure.</p>
+          <p className="rainbow">Your goal is to create a directory structure that matches what you see in the diagram.</p>
+          <p>The diagram will <strong>not</strong> update or tell you where you currently are; you have to use your commands to check what you have. What's already in your directory structure? Use you commands to figure that out, and then add or remove and files and directories necessary. Once you are successful, you'll move to the next level.</p>
+          <button className="next-level-btn" onClick={() => this.displayNextChallenge()}>
+            Ready to start!
+          </button>
+        </div>
+      )
+    } else if (this.state.currentChallenge < 3) {
       return (
         <div className="level-complete-container">
-          <p>{messages[randomNum]}</p>
+          <h3>{messages[randomNum]}</h3>
           <button className="next-level-btn" onClick={() => this.displayNextChallenge()}>
             Go to Level {this.state.currentChallenge + 1}!
           </button>
@@ -308,11 +319,11 @@ class Challenges extends React.Component {
   }
 
   render() {
-    solutions[this.state.currentChallenge] ? this.checkSolution() : this.displayCongrats();
+    solutions[this.state.currentChallenge] ? this.checkSolution() : this.displayMessage();
 
     return (
       <main className="challenges-main">
-        {this.state.justWon ? this.displayCongrats() : this.displayCurrentChallenge()}
+        {this.state.justWon ? this.displayMessage() : this.displayCurrentChallenge()}
       </main>
     );
   }
