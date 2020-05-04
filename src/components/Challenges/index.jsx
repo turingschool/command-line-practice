@@ -247,7 +247,7 @@ class Challenges extends React.Component {
   displayCurrentChallenge = () => {
     return (
       <div>
-        <p className="current-challenge">Challenge {this.state.currentChallenge + 1}</p>
+        <p className="current-challenge"><strong>Challenge {this.state.currentChallenge + 1}:</strong> Your goal is to create a directory structure that matches what you see in the diagram.</p>
         <div className="terminal-map-container">
           <Terminal handleNewCommand={this.handleNewCommand} />
           <Map mapData={solutions[this.state.currentChallenge]} />
