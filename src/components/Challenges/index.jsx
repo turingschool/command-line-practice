@@ -311,15 +311,14 @@ class Challenges extends React.Component {
     } else if (this.state.currentChallenge === 2 && this.state.justWon) {
       this.setState({
         currentChallenge: 3,
-        pathToCurrentLocation: ['other'],
-        currentLevel: 1,
+        pathToCurrentLocation: ['turing', '0mod'],
+        currentLevel: 2,
         justWon: false,
-        directoryStructure: {turing: {}, other: { "random-file.rb": null }},
+        directoryStructure: {turing: { '0mod': {}}},
         currentSolution: [
           {title: "root", type: "dir", levelFromRoot: 0 },
           {title: "turing", type: "dir", levelFromRoot: 1 },
-          {title: "other", type: "dir", levelFromRoot: 1 },
-          {title: "random-file.rb", type: "file", levelFromRoot: 2 },
+          {title: "0mod", type: "dir", levelFromRoot: 2 },
         ],
         winMessage: {}
       });
