@@ -181,6 +181,26 @@ const commandData = [
   ],
   },
 
+  {
+    commandName: "clear",
+    why1: "If you want to hide your previous commands and see a clean, fresh terminal, run clear! You can run clear from directory, at any time.",
+    how: [
+      {text: "Run clear:"},
+      {code: [
+        {command: "pwd"}, {output: "/root/projects"},
+        {command: "ls"}, {output: "first-project  file.txt"},
+        {command: "clear"}, {output: ""},
+      ]},
+      {text: "Continue working, now from a clean terminal!"},
+      {code: [
+        {command: ""}, {output: ""},
+      ]}
+    ],
+    mistakes: [
+      {text: "You can't mess anything up with this one!"},
+    ],
+  },
+
 ];
 
 export default commandData;
