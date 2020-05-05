@@ -1,7 +1,7 @@
 const commandData = [
   {
     commandName: "pwd",
-    why1: "When you wonder, \"where am I in the directory stucture?\", pwd will help answer that question. When you run this command, it will provide output informing you of the file path of your current working directory.",
+    why1: "When you wonder, \"where am I in the directory stucture?\", pwd will help answer that question. When you run this command, it will provide output informing you of the file path of your working directory.",
     why2: "pwd can be run at any time and is solely informative, so it won’t do anything besides give you some information! As we learn more about other commands available to us, the importance of this one will be illustrated more and more.",
     how: [
       {text: "Type pwd, then hit return!"},
@@ -12,7 +12,7 @@ const commandData = [
 
   {
     commandName: "ls",
-    why1: "If you are wondering what contents are inside of your current working directory, ls will help you out! ls is short for list. When you run this command, name of every file or directory that lives directly inside of your current working directory will be printed out.",
+    why1: "If you are wondering what contents are inside of your working directory, ls will help you out! ls is short for list. When you run this command, name of every file or directory that lives directly inside of your working directory will be printed out.",
     why2: "ls can be run at any time and is solely informative, so it won’t “do” anything besides give you some information! It’s a great tool to double check that the contents inside of your current directory are actually what you think they are.",
     how: [
       {text: "Type ls, then hit return!"},
@@ -24,7 +24,7 @@ const commandData = [
 
   {
     commandName: "cd",
-    why1: "If you want to navigate around the directories, cd will allow you to do that. cd stands for “change directory”. It command allows us to move both up and down the directory structure, which changes the current working directory.",
+    why1: "If you want to navigate around the directories, cd will allow you to do that. cd stands for “change directory”. It command allows us to move both up and down the directory structure, which changes the working directory.",
     why2: "cd does not provide any output, so when you’re new to it, you might wonder if it worked. That’s where pwd and ls will come in handy!",
     how: [
       {text: "To change directories, you need to tell the terminal WHERE you want to go! You do this by providing an (optional) argument to the cd command. Check out the examples below:"},
@@ -73,7 +73,7 @@ const commandData = [
     why1: "If you want to make a new file, you'll use the touch command.",
     why2: "Unlike the other commands we are learning about today, the name of “touch” doesn’t feel like it really lines up with what it’s job is. 🤷‍♀️",
     how: [
-      {text: "First, make sure your current working directory is the directory that that you want the new file to be inside of. Then type touch, then the name of the file you want to create, then hit return. A file with that name will be created inside of my current working directory."},
+      {text: "First, make sure your working directory is the directory that that you want the new file to be inside of. Then type touch, then the name of the file you want to create, then hit return. A file with that name will be created inside of my working directory."},
       {text: "Once you run the command, you won't be provided with any output. You can use ls to verify that your file was created."},
       {text: "In this first example, one argument is passed to touch."},
       {code: [
@@ -101,7 +101,7 @@ const commandData = [
     why1: "If you want to make a new directory, you'll use the mkdir command. It is short for make directory.",
     why2: "It is important to know that this file will be truly deleted; not just moved to the recycle bin.",
     how: [
-      {text: "First, make sure your current working directory is the directory that that you want the new directory to be inside of. You can run mkdir with one or more arguments. The arguments should be the names of the directories you want to create."},
+      {text: "First, make sure your working directory is the directory that that you want the new directory to be inside of. You can run mkdir with one or more arguments. The arguments should be the names of the directories you want to create."},
       {text: "In this first example, one argument is passed to mkdir."},
       {code: [
         {command: "pwd"}, {output: "/root/projects"},
@@ -118,7 +118,7 @@ const commandData = [
       ]},
     ],
     mistakes: [
-      {text: "Note that making a new directory does NOT change your current working directory. Many times, you will make a directory, then immediately after, want to touch several files that are intended to live inside of that newly created directory. In order to do that, you’ll need to run this series of commands:"},
+      {text: "Note that making a new directory does NOT change your working directory. Many times, you will make a directory, then immediately after, want to touch several files that are intended to live inside of that newly created directory. In order to do that, you’ll need to run this series of commands:"},
       {code: [
         {command: "pwd"}, {output: "/root/projects"},
         {command: "mkdir final-project"}, {output: ""},
@@ -150,7 +150,7 @@ const commandData = [
       ]},
     ],
     mistakes: [
-      {text: "If you pass an argument to rm that does not match the name of a file in your current working directory, you will get some output with a message telling you that."},
+      {text: "If you pass an argument to rm that does not match the name of a file in your working directory, you will get some output with a message telling you that."},
       {code: [
         {command: "ls"}, {output: "index.js file.txt"},
         {command: "rm card.js"}, {output: "rm: card.js: No such file or directory"},
@@ -183,7 +183,7 @@ const commandData = [
 
   {
     commandName: "clear",
-    why1: "If you want to hide your previous commands and see a clean, fresh terminal, run clear! You can run clear from directory, at any time.",
+    why1: "Sometimes our terminal gets cluttered with previous commands and it can be overwhelming, or just feel disorganized. If you want to hide your previous commands and see a clean, fresh terminal, run clear! You can run clear from any directory, at any time.",
     how: [
       {text: "Run clear:"},
       {code: [
