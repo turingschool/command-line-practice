@@ -19,10 +19,10 @@ const solutions = [
     {title: "turing", type: "dir", levelFromRoot: 1 },
     {title: "0mod", type: "dir", levelFromRoot: 2 },
     {title: "practice1.js", type: "file", levelFromRoot: 3 },
-    {title: "practice2.js", type: "file", levelFromRoot: 3 },
     {title: "1mod", type: "dir", levelFromRoot: 2 },
     {title: "practice", type: "dir", levelFromRoot: 3 },
-    {title: "classwork", type: "dir", levelFromRoot: 3 },
+    {title: "2mod", type: "dir", levelFromRoot: 2 },
+    {title: "projects", type: "dir", levelFromRoot: 3 },
   ],
 ];
 
