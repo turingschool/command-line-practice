@@ -267,7 +267,10 @@ class Playground extends React.Component {
         <p className="how-to-practice">Practice using the commands you've learned by building out a directory structure, navigating through it, creating or removing files or directories, etc. This is a <em>playground</em> - you can't mess it up!</p>
         <p className="how-to-practice">The diagram represents your starting directory structure. As you create and remove files and directories, you'll see the diagram update to represent your directory structure. In the diagram, <span className="blue">directories are blue</span> and <span className="yellow">files are yellow</span>. The directory with the <span className="rainbow">rainbow background is your working directory</span>.</p>
         <div className="terminal-map-container">
-          <Terminal handleNewCommand={this.handleNewCommand}/>
+          <Terminal
+            handleNewCommand={this.handleNewCommand}
+            winMessage={{}}
+          />
           <Map mapData={this.state.mapData} />
         </div>
       </main>

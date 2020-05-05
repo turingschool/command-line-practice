@@ -1,7 +1,15 @@
 .challenges-main {
   padding: 3rem 0;
 
-  h2 {
+  .completed {
+    margin: 0 auto;
+  }
+
+  .start-over-btn {
+    width: 40%;
+  }
+
+  h3 {
     font-size: 160%;
   }
 
@@ -58,7 +66,7 @@
 
 }
 
-.next-level-btn {
+.next-level-btn, .start-over-btn {
   font-family: 'Nunito', sans-serif;
   border: 0;
   background-color: #FFF1FF;
@@ -75,7 +83,8 @@
   transition: 1s ease;
 }
 
-.next-level-btn:hover {
+.next-level-btn:hover,
+.start-over-btn:hover {
   background-color: #FFE1FF;
   transition: 1s ease;
 }
