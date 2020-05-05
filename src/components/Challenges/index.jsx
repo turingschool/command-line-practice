@@ -14,11 +14,13 @@ class Challenges extends React.Component {
       pathToCurrentLocation: [],
       currentCommand: [],
       currentChallenge: 0,
-      justWon: true,
+      justWon: false,
       currentSolution: [
         {title: "root", type: "dir", levelFromRoot: 0 },
         {title: "turing", type: "dir", levelFromRoot: 1 },
       ],
+      winMessage: {},
+      challengesComplete: false,
     }
   }
 
@@ -86,6 +88,7 @@ class Challenges extends React.Component {
       directDescendants[title] = {};
       this.updateMapData(title, "dir");
     });
+    this.checkSolution();
   }
 
   lsCommand = (commandArg) => {
@@ -104,6 +107,7 @@ class Challenges extends React.Component {
       directDescendants[title] = null;
       this.updateMapData(title, 'file');
     });
+    this.checkSolution();
   }
 
   pwdCommand = () => {
@@ -146,7 +150,7 @@ class Challenges extends React.Component {
     } else {
       result = `rm: ${file}: No such file or directory`;
     }
-
+    this.checkSolution();
     return result;
   }
 
@@ -168,7 +172,7 @@ class Challenges extends React.Component {
     } else {
       result = `rmdir: ${dir}: No such file or directory`;
     }
-
+    this.checkSolution();
     return result;
   }
 
@@ -210,12 +214,17 @@ class Challenges extends React.Component {
         return null;
         break;
       case 'rm':
-        let outcome = this.removeCommands(commandArgs, 'rm');
-        return outcome;
+        return this.removeCommands(commandArgs, 'rm');;
         break;
       case 'rmdir':
-        let result = this.removeCommands(commandArgs, 'rmdir');
-        return result;
+        return this.removeCommands(commandArgs, 'rmdir');;
+        break;
+      case 'continue':
+        this.setUpNextChallenge();
+        return 'clear';
+        break;
+      case 'clear':
+        return 'clear';
         break;
       default:
         this.setState({currentExplanation: 'You just ran a command that does not exist'});
@@ -224,9 +233,10 @@ class Challenges extends React.Component {
   }
 
   checkSolution = () => {
-    if (this.state.currentSolution.length === solutions[this.state.currentChallenge].length) {
+    if (this.state.currentSolution.length + 1 === solutions[this.state.currentChallenge - 1].length) {
+
       const match = this.state.currentSolution.map(item => {
-        return solutions[this.state.currentChallenge].map(checkItem => {
+        return solutions[this.state.currentChallenge - 1].map(checkItem => {
           return (item.type === checkItem.type && item.title === checkItem.title) ? true : false;
         });
       });
@@ -236,10 +246,19 @@ class Challenges extends React.Component {
       });
 
       if (finalCheck) {
-        this.setState(state => {
-          currentChallenge: state.currentChallenge += 1
+        const messages = [
+          'Bravo! Run continue to go on.',
+          'You are crushing it! Run continue to go on.',
+          'Look at you go! Run continue to go on.',
+          'Whoo hoo. Run continue to go on.',
+          'You did the thing! Run continue to go on.'
+        ];
+        const randomNum = Math.floor(Math.random() * 5);
+
+        this.setState({
+          winMessage: {command: messages[randomNum], output: ""},
+          justWon: true
         });
-        this.setState({justWon: true});
       }
     }
   }
@@ -247,52 +266,38 @@ class Challenges extends React.Component {
   displayCurrentChallenge = () => {
     return (
       <div>
-        <p className="current-challenge"><strong>Challenge {this.state.currentChallenge + 1}:</strong> Your goal is to create a directory structure that matches what you see in the diagram.</p>
+        <p className="current-challenge"><strong>Challenge {this.state.currentChallenge}:</strong> Your goal is to create a directory structure that matches what you see in the diagram.</p>
         <div className="terminal-map-container">
-          <Terminal handleNewCommand={this.handleNewCommand} />
-          <Map mapData={solutions[this.state.currentChallenge]} />
+          <Terminal
+            handleNewCommand={this.handleNewCommand}
+            winMessage={this.state.winMessage}/>
+          <Map mapData={solutions[this.state.currentChallenge - 1]} />
         </div>
       </div>
     );
   }
 
-  displayMessage = () => {
-    const messages = ['Bravo', 'You are crushing it!', 'Look at you go!', 'Whoo hoo', 'You did the thing!'];
-    const randomNum = Math.floor(Math.random() * 5);
+  displayZeroState = () => {
+    return (
+      <div className="challenges-zero-state">
+        <h2>Challenges</h2>
+        <p>You have a series of three challenges to complete. For each, you will be given a terminal to run commands, and a diagram of the <em>desired</em> directory structure.</p>
+        <p className="rainbow">Your goal is to create a directory structure that matches what you see in the diagram.</p>
+        <p>The diagram will <strong>not</strong> update or tell you where you currently are; you have to use your commands to check what you have. What's already in your directory structure? Use you commands to figure that out, and then add or remove and files and directories necessary. Once you are successful, you'll move to the next level.</p>
+        <button className="next-level-btn" onClick={() => this.setUpNextChallenge()}>
+          Ready to start!
+        </button>
+      </div>
+    );
 
-    if (this.state.currentChallenge === 0) {
-      return (
-        <div className="challenges-zero-state">
-          <h2>Challenges</h2>
-          <p>You have a series of three challenges to complete. For each, you will be given a terminal to run commands, and a diagram of the <em>desired</em> directory structure.</p>
-          <p className="rainbow">Your goal is to create a directory structure that matches what you see in the diagram.</p>
-          <p>The diagram will <strong>not</strong> update or tell you where you currently are; you have to use your commands to check what you have. What's already in your directory structure? Use you commands to figure that out, and then add or remove and files and directories necessary. Once you are successful, you'll move to the next level.</p>
-          <button className="next-level-btn" onClick={() => this.displayNextChallenge()}>
-            Ready to start!
-          </button>
-        </div>
-      )
-    } else if (this.state.currentChallenge < 3) {
-      return (
-        <div className="level-complete-container">
-          <h3>{messages[randomNum]}</h3>
-          <button className="next-level-btn" onClick={() => this.displayNextChallenge()}>
-            Go to Level {this.state.currentChallenge + 1}!
-          </button>
-        </div>
-      );
-    } else {
-      return (
-        <div className="level-complete-container">
-          <h3>You've completed all levels!</h3>
-        </div>
-      );
-    }
   }
 
-  displayNextChallenge = () => {
-    if (this.state.currentChallenge < 2) {
+  setUpNextChallenge = () => {
+    if (this.state.currentChallenge === 0 && !this.state.justWon) {
+      this.setState({currentChallenge: 1});
+    } else if (this.state.currentChallenge < 2 && this.state.justWon) {
       this.setState({
+        currentChallenge: this.state.currentChallenge + 1,
         pathToCurrentLocation: [],
         currentLevel: 0,
         justWon: false,
@@ -301,9 +306,11 @@ class Challenges extends React.Component {
           {title: "root", type: "dir", levelFromRoot: 0 },
           {title: "turing", type: "dir", levelFromRoot: 1 },
         ],
+        winMessage: {}
       });
-    } else if (this.state.currentChallenge === 2) {
+    } else if (this.state.currentChallenge === 2 && this.state.justWon) {
       this.setState({
+        currentChallenge: 3,
         pathToCurrentLocation: ['other'],
         currentLevel: 1,
         justWon: false,
@@ -314,16 +321,57 @@ class Challenges extends React.Component {
           {title: "other", type: "dir", levelFromRoot: 1 },
           {title: "random-file.rb", type: "file", levelFromRoot: 2 },
         ],
+        winMessage: {}
       });
+    } else if (this.state.currentChallenge === 3 && this.state.justWon) {
+      this.setState({challengesComplete: true});
     }
   }
 
+  startChallengesOver = () => {
+    this.setState({
+      directoryStructure: {turing: {}},
+      currentLevel: 0,
+      pathToCurrentLocation: [],
+      currentCommand: [],
+      currentChallenge: 0,
+      justWon: false,
+      currentSolution: [
+        {title: "root", type: "dir", levelFromRoot: 0 },
+        {title: "turing", type: "dir", levelFromRoot: 1 },
+      ],
+      winMessage: {},
+      challengesComplete: false,
+    });
+  }
+
+  displayEndState = () => {
+    return (
+      <div className="completed">
+        <h3>You completed all three challenges!</h3>
+        <button
+          className="start-over-btn"
+          onClick={() => this.startChallengesOver()}
+        >
+          Start Over
+        </button>
+      </div>
+    );
+  }
+
   render() {
-    solutions[this.state.currentChallenge] ? this.checkSolution() : this.displayMessage();
+    let toDisplay;
+    if (this.state.currentChallenge === 0) {
+      toDisplay = this.displayZeroState()
+    } else if (this.state.challengesComplete) {
+      toDisplay = this.displayEndState();
+    } else {
+      toDisplay = this.displayCurrentChallenge();
+    }
 
     return (
       <main className="challenges-main">
-        {this.state.justWon ? this.displayMessage() : this.displayCurrentChallenge()}
+        {toDisplay}
       </main>
     );
   }
